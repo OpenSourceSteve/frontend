@@ -1,3 +1,4 @@
+import { Docket } from "./Docket";
 import { DocketSidebar } from "./DocketSidebar";
 
-export { DocketSidebar }
+export { Docket, DocketSidebar }

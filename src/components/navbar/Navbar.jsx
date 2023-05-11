@@ -1,4 +1,5 @@
-import "./navbar.module.css"
+import styles from "./navbar.module.css"
+
 
 export const Navbar = ({ navigateTo }) => {
     const pages = [
@@ -8,7 +9,7 @@ export const Navbar = ({ navigateTo }) => {
         "finances"
     ]
 
-    return <nav>{pages.map(page => {
-        return <div key={page} onClick={() => navigateTo(page)}>{page}</div>
+    return <nav className={styles.nav}>{pages.map(page => {
+        return <div key={page} onClick={() => navigateTo(["", page])}>{page}</div>
     })}</nav>
 }

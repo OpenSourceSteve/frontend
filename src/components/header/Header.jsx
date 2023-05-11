@@ -3,19 +3,18 @@ import { LoginHeader } from './LoginHeader'
 import { SignupHeader } from './SignupHeader'
 import { AppHeader } from './AppHeader'
 
-export const Header = ({ page, navigateTo }) => {
-
-    if (page === "") {
+export const Header = ({ pages, navigateTo }) => {
+    if (pages[1] === "") {
         return <HomepageHeader navigateTo={navigateTo} />
     }
 
-    if (page === "login") {
+    if (pages[1] === "login") {
         return <LoginHeader navigateTo={navigateTo} />
     }
 
-    if (page === "signup") {
+    if (pages[1] === "signup") {
         return <SignupHeader navigateTo={navigateTo} />
     }
 
-    return <AppHeader page={page} navigateTo={navigateTo} />
+    return <AppHeader pages={pages} navigateTo={navigateTo} />
 }

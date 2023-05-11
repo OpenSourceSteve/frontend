@@ -3,18 +3,19 @@ import { ClientsSidebar } from '../../features/clients'
 import { DocketSidebar } from '../../features/docket'
 import { FinancesSidebar } from '../../features/finances'
 
-export const Sidebar = ({ page }) => {
+export const Sidebar = ({ pages }) => {
 
-    switch (page) {
+    switch (pages[1]) {
         case "docket":
-            return <DocketSidebar />
+            return <DocketSidebar pages={pages} />
         case "clients":
-            return <ClientsSidebar />
+            return <ClientsSidebar pages={pages} />
         case "cases":
-            return <CasesSidebar />
+            return <CasesSidebar pages={pages} />
         case "finances":
-            return <FinancesSidebar />
+            return <FinancesSidebar pages={pages} />
         default:
+            console.log("pages[1]:", pages[1])
             throw new Error("Page not found")
     }
 }

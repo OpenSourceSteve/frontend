@@ -1,15 +1,16 @@
-nav {
+.nav {
     position: absolute;
     top: 0px;
     left: 150px;
     height: 60px;
     display: flex;
+    /* flex-direction: column; */
     align-items: center;
     justify-content: flex-start;
     z-index: 10;
 }
 
-nav div {
+.nav div {
     margin: 0px 10px;
     text-transform: capitalize;
     cursor: pointer;
