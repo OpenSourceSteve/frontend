@@ -1,0 +1,8 @@
+.main {
+    background-color: aliceblue;
+    position: absolute;
+    top: 60px;
+    bottom: 40px;
+    width: 100%;
+    display: flex;
+}
