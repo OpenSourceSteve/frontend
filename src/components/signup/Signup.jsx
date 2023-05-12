@@ -1,5 +1,9 @@
+import { useNavigate } from "react-router-dom";
+
 import styles from './signup.module.css'
 
 export const Signup = ({ navigateTo }) => {
-    return <div className={styles.signup} onClick={() => navigateTo(["", "signup"])}>Signup</div>
+    const navigate = useNavigate()
+
+    return <div className={styles.signup} onClick={() => navigate("/signup")}>Signup</div>
 }

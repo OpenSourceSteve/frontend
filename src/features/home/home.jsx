@@ -1,5 +1,18 @@
-import styles from './home.module.css'
+import { HomepageHeader, Footer } from '../../components'
+
+import styles from './Home.module.css'
 
 export const Home = () => {
-    return <div className={styles.home}>Home page content</div>
+    return (
+        <>
+            <HomepageHeader />
+            <main className={styles.main} >
+                <section className={styles.section}>
+                    <h1>This is the homepage.</h1>
+                    <div>This is homepage content.</div>
+                </section>
+            </main>
+            <Footer />
+        </>
+    )
 }

@@ -1,4 +1,4 @@
-import styles from './clients.module.css'
+import styles from './Clients.module.css'
 
 export const ClientDetails = () => {
     return (

@@ -1,5 +1,5 @@
-import styles from './footer.module.css'
+import styles from './Footer.module.css'
 
 export const Footer = () => {
-    return <footer className={styles.footer}>©EasyLegal.app 2023</footer>
+    return <footer className={styles.footer}>&copy; EasyLegal.app 2023</footer>
 }

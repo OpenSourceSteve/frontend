@@ -1,8 +1,18 @@
-import styles from './cases.module.css'
+import { AppHeader, Footer } from '../../components'
+import styles from './Cases.module.css'
 
-export const CasesList = ({ pages }) => {
-    if (pages.length === 2) {
-        return <div className={styles.cases}>Cases list contents</div>
-    }
-    return <div className={styles.cases}>Cases {pages[2]} details content.</div>
+export const CasesList = () => {
+    return (
+        <>
+            <AppHeader />
+            <main className={styles.main}>
+                <aside className={styles.aside}>Cases Sidebar</aside>
+                <section className={styles.section}>
+                    <h1>This is the Cases List page</h1>
+                    <div>This is cases list content.</div>
+                </section>
+            </main>
+            <Footer />
+        </>
+    )
 }

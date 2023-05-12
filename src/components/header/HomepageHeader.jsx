@@ -2,14 +2,14 @@ import { Logo } from "../logo"
 import { Login } from "../login"
 import { Signup } from "../signup"
 
-import styles from './header.module.css'
+import styles from './Header.module.css'
 
-export const HomepageHeader = ({ navigateTo }) => {
+export const HomepageHeader = () => {
     return <header className={styles.header}>
-        <Logo navigateTo={navigateTo} />
+        <Logo />
         <div>
-            <Login navigateTo={navigateTo} />
-            <Signup navigateTo={navigateTo} />
+            <Login />
+            <Signup />
         </div>
     </header>
 }

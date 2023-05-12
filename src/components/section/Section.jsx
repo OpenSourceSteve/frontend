@@ -1,5 +1,7 @@
 import {
+    CaseDetails,
     CasesList,
+    ClientDetails,
     ClientsList,
     Docket,
     Finances,
@@ -11,11 +13,11 @@ import {
 
 import styles from './section.module.css'
 
-export const Section = ({ pages }) => {
+export const Section = ({ page }) => {
     const pageSectionMap = {
-        "": <Home />,
-        "cases": <CasesList pages={pages} />,
-        "clients":<ClientsList pages={pages} />,
+        "home": <Home />,
+        "cases": <CasesList />,
+        "clients":<ClientsList />,
         "docket": <Docket />,
         "finances": <Finances />,
         "login": <Login />,
@@ -24,8 +26,8 @@ export const Section = ({ pages }) => {
 
     return (
         <section className={styles.section}>
-            <h1>This is the {pages[1] === "" ? "Home" : pages[1]} page</h1>
-            {pageSectionMap[pages[1]] || <NotFound />}
+            <h1>This is the {page === "" ? "Home" : page} page</h1>
+            {pageSectionMap[page] || <NotFound />}
         </section>
     )
 }

@@ -1,4 +1,4 @@
-import styles from './cases.module.css'
+import styles from './Cases.module.css'
 
 export const CaseDetails = () => {
     return (

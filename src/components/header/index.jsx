@@ -1,3 +1,6 @@
-import { Header } from './Header'
+import { AppHeader } from './AppHeader'
+import { HomepageHeader } from './HomepageHeader'
+import { LoginHeader } from './LoginHeader'
+import { SignupHeader } from './SignupHeader'
 
-export { Header }
+export { AppHeader, HomepageHeader, LoginHeader, SignupHeader }

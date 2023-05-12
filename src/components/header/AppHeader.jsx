@@ -2,7 +2,7 @@ import { Logo } from "../logo"
 import { Logout } from "../logout"
 import { Navbar } from "../navbar"
 
-import styles from './header.module.css'
+import styles from './Header.module.css'
 
 export const AppHeader = ({ page, navigateTo}) => {
     return <>
