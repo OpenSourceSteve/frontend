@@ -5,6 +5,8 @@ import { Finances } from "./finances";
 import { Home } from "./home";
 import { Login } from "./login";
 import { NotFound } from "./errors";
+import { Profile } from "./profile";
+import { Settings } from "./settings";
 import { Signup } from "./signup";
 
 export {
@@ -17,5 +19,7 @@ export {
     Home,
     Login,
     NotFound,
+    Profile,
+    Settings,
     Signup
 }

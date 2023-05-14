@@ -16,9 +16,9 @@ import {
   // Logout,
   // NoteDetail,
   // NotesList,
-  // Profile,
+  Profile,
   Home,
-  // Settings,
+  Settings,
   Signup,
   // TaskDetail,
   // TasksList,
@@ -106,14 +106,14 @@ export const pathElementMappingsArray = [
   //   path: "/logout",
   //   element: <Logout />
   // },
-  // {
-  //   path: "/profile",
-  //   element: <Profile />
-  // },
-  // {
-  //   path: "/settings",
-  //   element: <Settings />
-  // },
+  {
+    path: "/profile",
+    element: <Profile />
+  },
+  {
+    path: "/settings",
+    element: <Settings />
+  },
   {
     path: "/signup",
     element: <Signup />

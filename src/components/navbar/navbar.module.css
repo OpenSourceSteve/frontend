@@ -3,15 +3,20 @@
     top: 0px;
     left: 150px;
     height: 60px;
-    display: flex;
-    /* flex-direction: column; */
-    align-items: center;
-    justify-content: flex-start;
     z-index: 10;
 }
 
-.nav div {
+.nav a {
     margin: 0px 10px;
     text-transform: capitalize;
-    cursor: pointer;
+}
+
+.nav ul {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.nav ul li {
+    list-style-type: none;
 }

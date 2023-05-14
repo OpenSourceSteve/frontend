@@ -1,20 +1,31 @@
-import { HomepageHeader } from './HomepageHeader'
-import { LoginHeader } from './LoginHeader'
-import { SignupHeader } from './SignupHeader'
-import { AppHeader } from './AppHeader'
+import { Logo } from "../logo"
+import { Link } from "../link"
+import { Account } from "../account"
+import { Navbar } from "../navbar"
 
-export const Header = ({ page }) => {
-    if (page === "") {
-        return <HomepageHeader  />
+import styles from './Header.module.css'
+
+export const Header = ({ links, pages }) => {
+    if (pages) {
+        return (
+            <>
+                <header className={styles.header} >
+                    <Logo />
+                    <Account />
+                </header>
+                <Navbar pages={pages} />
+            </>
+        )
     }
 
-    if (page === "login") {
-        return <LoginHeader  />
+    if (links.length) {
+        return (
+            <header className={styles.header}>
+                <Logo />
+                <div>
+                    {links.map(link => <Link key={link} path={link} />)}
+                </div>
+            </header>
+        )
     }
-
-    if (page === "signup") {
-        return <SignupHeader  />
-    }
-
-    return <AppHeader page={page} />
 }

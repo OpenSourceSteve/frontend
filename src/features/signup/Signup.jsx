@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom';
 
 import { useSignupMutation } from "./signupSlice";
-import { Footer, SignupHeader } from "../../components"
+import { Footer, Header } from "../../components"
 
 import styles from './Signup.module.css'
 
@@ -38,9 +38,12 @@ export const Signup = () => {
             // TODO: create proper error message
         }
     }
+
+    const links = ["login"]
+
     return (
         <>
-            <SignupHeader />
+            <Header links={links} />
             <main className={styles.main} >
                 <section className={styles.section}>
                     <form className={styles.form}>

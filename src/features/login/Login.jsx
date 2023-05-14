@@ -2,7 +2,7 @@ import { useState } from "react"
 import { useNavigate } from "react-router-dom";
 
 import { useLoginMutation } from "./loginSlice";
-import { Footer, LoginHeader } from "../../components"
+import { Footer, Header } from "../../components"
 
 import styles from './Login.module.css'
 
@@ -42,9 +42,12 @@ export const Login = () => {
             // TODO: create proper error message
         }
     }
+
+    const links = ["signup"]
+
     return (
         <>
-            <LoginHeader />
+            <Header links={links} />
             <main className={styles.main} >
                 <section className={styles.section}>
                     <form className={styles.form}>

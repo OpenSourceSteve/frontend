@@ -1,4 +1,5 @@
-import { AppHeader, HomepageHeader, LoginHeader, SignupHeader } from "./header"
+import { Header } from "./header"
 import { Footer } from "./footer"
+import { Link } from './link'
 
-export { AppHeader, Footer, HomepageHeader, LoginHeader,  SignupHeader }
+export { Footer, Header, Link }

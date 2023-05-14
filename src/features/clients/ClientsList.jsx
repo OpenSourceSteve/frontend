@@ -1,10 +1,12 @@
-import { AppHeader, Footer } from '../../components'
+import { Header, Footer } from '../../components'
 import styles from './Clients.module.css'
 
 export const ClientsList = () => {
+    const pages = ["docket", "clients", "cases", "finances"]
+
     return (
         <>
-            <AppHeader />
+            <Header pages={pages} />
             <main className={styles.main}>
                 <aside className={styles.aside}>Clients Sidebar</aside>
                 <section className={styles.section}>

@@ -1,10 +1,12 @@
-import { AppHeader, Footer } from '../../components'
+import { Header, Footer } from '../../components'
 import styles from './Docket.module.css'
 
 export const Docket = () => {
+    const pages = ["docket", "clients", "cases", "finances"]
+
     return (
         <>
-            <AppHeader />
+            <Header pages={pages} />
             <main className={styles.main}>
                 <aside className={styles.aside}>Docket Sidebar</aside>
                 <section className={styles.section}>
