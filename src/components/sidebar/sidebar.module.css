@@ -1,5 +1,18 @@
 .aside {
-    background-color:pink;
     width: 200px;
     height: 100%;
+    text-transform: capitalize;
+    border-right: 1px solid black;
+}
+
+.aside ul {
+    padding: 0;
+}
+
+.aside ul li {
+    list-style-type: none;
+}
+
+.aside > ul > li {
+    margin: 40px 0px;
 }

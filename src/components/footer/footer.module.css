@@ -1,5 +1,6 @@
 footer {
-    background-color: lightseagreen;
+    color: white;
+    background-color: #41342e;
     position: fixed;
     bottom: 0px;
     height: 40px;
@@ -7,4 +8,5 @@ footer {
     display: flex;
     align-items: center;
     justify-content: space-around;
+    border-top: 1px solid black;
 }

@@ -1,19 +1,25 @@
 import { Logo } from "../logo"
 import { Link } from "../link"
-import { Account } from "../account"
+import { Dropdown } from "../dropdown"
 import { Navbar } from "../navbar"
 
 import styles from './Header.module.css'
 
-export const Header = ({ links, pages }) => {
+export const Header = ({ currentPage, links, pages }) => {
     if (pages) {
         return (
             <>
                 <header className={styles.header} >
-                    <Logo />
-                    <Account />
+                    <div className={styles.container}>
+                        <Logo />
+                        <Dropdown title={"account"}/>
+                    </div>
                 </header>
-                <Navbar pages={pages} />
+                <div className={styles.nav_outer_container}>
+                    <div className={styles.nav_inner_container}>
+                        <Navbar currentPage={currentPage} pages={pages} />
+                    </div>
+                </div>
             </>
         )
     }
@@ -22,7 +28,7 @@ export const Header = ({ links, pages }) => {
         return (
             <header className={styles.header}>
                 <Logo />
-                <div>
+                <div className={styles.authentication}>
                     {links.map(link => <Link key={link} path={link} />)}
                 </div>
             </header>

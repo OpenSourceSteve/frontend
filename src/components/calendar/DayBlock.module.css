@@ -1,0 +1,8 @@
+.dayBlock {
+    height:calc(100% - 40px);
+    border: 1px solid black;
+    border-radius: 10px;
+    margin: 10px;
+    padding: 10px;
+    min-width: 400px;
+}

@@ -1,8 +1,17 @@
 .main {
-    background-color: aliceblue;
-    position: absolute;
+    position: fixed;
     top: 60px;
     bottom: 40px;
     width: 100%;
     display: flex;
+    justify-content: center;
+    background-color: #f5aa8f;
+}
+
+.container {
+    width: 100%;
+    max-width: 1200px;
+    display: flex;
+    align-items: center;
+    justify-content:space-between;
 }

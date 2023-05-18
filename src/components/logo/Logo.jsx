@@ -18,5 +18,5 @@ export const Logo = () => {
                 onKeyDown={keydownHandler}
                 onClick={clickHandler}
                 data-href="/"
-            >LOGO_HERE</div>
+            >[LOGO_HERE]</div>
 }

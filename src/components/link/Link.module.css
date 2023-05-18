@@ -1,5 +1,9 @@
-div a {
-    text-transform: capitalize;
+.activeLink {
+    font-weight: 800;
     text-decoration: none;
-    color: black;
+}
+
+.link {
+    margin: 0 10px;
+    text-decoration: none;
 }

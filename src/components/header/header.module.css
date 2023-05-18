@@ -1,16 +1,38 @@
 .header {
-    background-color: #ffebcd;
+    color: white;
+    background-color: #41342e;
     position: fixed;
     top: 0px;
     height: 60px;
     width: 100%;
     display: flex;
     align-items: center;
-    justify-content:space-between;
+    justify-content:space-around;
     z-index: 1;
+    border-bottom: 1px solid black;
 }
 
-.header div {
+.container {
+    width: 100%;
+    max-width: 1200px;
     display: flex;
-    margin: 0px 10px;
+    align-items: center;
+    justify-content:space-between;
+}
+
+.nav_outer_container {
+    display: flex;
+    align-items: center;
+    justify-content:center;
+}
+
+.nav_inner_container {
+    width: 100%;
+    max-width: 800px;
+    display: flex;
+    align-items: center;
+}
+
+.authentication {
+    display: flex;
 }

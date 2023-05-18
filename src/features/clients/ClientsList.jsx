@@ -1,19 +1,31 @@
-import { Header, Footer } from '../../components'
+import { Header, Main, Sidebar, Section, Footer } from '../../components'
+import { pages } from '../../app/pages'
+
 import styles from './Clients.module.css'
 
 export const ClientsList = () => {
-    const pages = ["docket", "clients", "cases", "finances"]
-
     return (
         <>
-            <Header pages={pages} />
-            <main className={styles.main}>
-                <aside className={styles.aside}>Clients Sidebar</aside>
-                <section className={styles.section}>
-                    <h1>This is the Clients List page</h1>
-                    <div>This is clients list content.</div>
-                </section>
-            </main>
+            <Header currentPage="clients" pages={pages} />
+            <Main>
+                <Sidebar>
+                    <ul>
+                        <li>
+                            <button>Add New Client</button>
+                        </li>
+                        <li>
+                            <div>Filter by client name:</div>
+                            <input type="text" />
+                        </li>
+                    </ul>
+                </Sidebar>
+                <Section>
+                    <div className={styles.docketHeader}>
+                        <h1>Clients</h1>
+                    </div>
+                    <div>Clients content here</div>
+                </Section>
+            </Main>
             <Footer />
         </>
     )

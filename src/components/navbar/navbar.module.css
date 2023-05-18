@@ -1,9 +1,9 @@
 .nav {
-    position: absolute;
-    top: 0px;
-    left: 150px;
     height: 60px;
     z-index: 10;
+    display: flex;
+    align-items: center;
+    font-size: 22px;
 }
 
 .nav a {
@@ -14,9 +14,13 @@
 .nav ul {
     display: flex;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: center;
 }
 
 .nav ul li {
     list-style-type: none;
+}
+
+.nav ul a {
+    color: white;
 }

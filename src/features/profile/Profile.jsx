@@ -1,9 +1,9 @@
 import { Header, Footer } from '../../components'
+import { pages } from '../../app/pages'
+
 import styles from './Profile.module.css'
 
 export const Profile = () => {
-    const pages = ["docket", "clients", "cases", "finances"]
-
     return (
         <>
             <Header pages={pages} />

@@ -2,24 +2,8 @@ import { useNavigate } from "react-router-dom"
 
 import styles from "./Link.module.css"
 
-export const Link = ({ path }) => {
+export const Link = ({ currentPage, path, color }) => {
     const navigate = useNavigate()
-
-    const keydownHandler = event => {
-        if (event.keyCode !== 13) {
-            return false;
-        }
-
-        const href = event.target.dataset['href']
-
-        if (href === "/logout") {
-            // TODO: POST to /logout
-            navigate("/")
-        } else {
-            console.log(href)
-            navigate(href)
-        }
-    }
 
     const clickHandler = event => {
         event.preventDefault();
@@ -34,16 +18,11 @@ export const Link = ({ path }) => {
     }
 
     return (
-        <div tabIndex={0}
-            className={styles.login}
-            onKeyDown={keydownHandler}
-            data-href={`/${path}`}>
-
-            <a href={`/${path}`}
-                onClick={clickHandler}
-                data-href={`/${path}`}
+        <a href={`/${path}`}
+               className={path === currentPage ? styles.activeLink : styles.link}
+               onClick={clickHandler}
+               data-href={`/${path}`}
+               style={{color}}
             >{path}</a>
-
-        </div>
     )
 }

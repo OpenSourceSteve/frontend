@@ -1,0 +1,14 @@
+.monthlyCalendar {
+    border: 1px solid black;
+    width: 100%;
+    height: calc(100% - 40px);
+    border-radius: 10px;
+    margin: 10px;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    padding: 10px;
+}
+
+.monthlyCalendar div {
+    border: 1px solid black;
+}
