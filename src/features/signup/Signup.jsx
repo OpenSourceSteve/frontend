@@ -14,12 +14,17 @@ export const Signup = () => {
     const [signup, { isLoading }] = useSignupMutation();
 
     const handleInput = function ({ target }) {
-
         const { checked, name, type, value } = target;
         setState({
             ...state,
             [name]: type === 'checkbox' ? checked : value
         })
+    }
+
+    const keydownHandler = event => {
+        if (event.keyCode === 13) {
+            handleSubmit()
+        }
     }
 
     const handleSubmit = async () => {
@@ -74,7 +79,7 @@ export const Signup = () => {
                         <input type="checkbox" name="agreed" checked={state.agreed} onChange={handleInput} id="agreement" />
                             <label htmlFor="agreement">I agree to the <Link to="/terms">terms and conditions.</Link></label>
                         </div>
-                        <button className={`w-100 btn btn-lg btn-primary ${state.agreed ? '' : 'disabled'}`} type="button" onClick={handleSubmit}>Sign up</button>
+                        <button className={`w-100 btn btn-lg btn-primary ${state.agreed ? '' : 'disabled'}`} type="button" onKeyDown={keydownHandler} onClick={handleSubmit}>Sign up</button>
                         <p className="mt-5 mb-3 text-body-secondary">&copy; 2023</p>
                     </form>
                 </section>

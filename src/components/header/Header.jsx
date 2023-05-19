@@ -12,7 +12,7 @@ export const Header = ({ currentPage, links, pages }) => {
                 <header className={styles.header} >
                     <div className={styles.container}>
                         <Logo />
-                        <Dropdown title={"account"}/>
+                        <Dropdown title={"account"} />
                     </div>
                 </header>
                 <div className={styles.nav_outer_container}>
@@ -27,9 +27,11 @@ export const Header = ({ currentPage, links, pages }) => {
     if (links.length) {
         return (
             <header className={styles.header}>
-                <Logo />
-                <div className={styles.authentication}>
-                    {links.map(link => <Link key={link} path={link} />)}
+                <div className={styles.container}>
+                    <Logo />
+                    <div className={styles.authentication}>
+                        {links.map(link => <Link key={link} path={link} color={"white"}/>)}
+                    </div>
                 </div>
             </header>
         )
