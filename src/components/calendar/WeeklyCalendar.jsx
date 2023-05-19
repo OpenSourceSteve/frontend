@@ -1,9 +1,9 @@
-import { DayBlock } from './DayBlock'
+import { WeeklyDayBlock } from './WeeklyDayBlock'
 
 import { days } from '../../app/days'
 import { months } from '../../app/months'
 
-import styles from './Calendar.module.css'
+import calendarStyles from './Calendar.module.css'
 import weeklyStyles from './WeeklyCalendar.module.css'
 
 export const WeeklyCalendar = () => {
@@ -24,12 +24,12 @@ export const WeeklyCalendar = () => {
 
     return (
         <>
-            <div className={styles.docketHeader}>
+            <div>
                 <h1>Week of {`${datesOfWeek[0].getDate()} ${months[datesOfWeek[0].getMonth()]} ${datesOfWeek[0].getFullYear()}`} to {`${datesOfWeek[6].getDate()} ${months[datesOfWeek[6].getMonth()]} ${datesOfWeek[6].getFullYear()}`}</h1>
             </div>
-            <div className={styles.container}>
+            <div className={calendarStyles.container}>
                 <div className={weeklyStyles.weeklyCalendar}>
-                    {days.map((day, index) => <DayBlock key={index} date={datesOfWeek[index]}/>)}
+                    {days.map((_, index) => <WeeklyDayBlock key={index} date={datesOfWeek[index]}/>)}
                 </div>
             </div>
         </>

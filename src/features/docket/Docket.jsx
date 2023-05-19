@@ -13,11 +13,11 @@ export const Docket = () => {
     ]
 
     const [eventTypes, setEventTypes] = useState({
-        'courtAppearances': true,
+        'court appearances': true,
         'deadlines': true,
-        'clientAppointments': true,
-        'otherAppointments': true,
-        'otherHoursBillable': true
+        'client appointments': true,
+        'other appointments': true,
+        'other hours billable': true
     })
 
     const keydownHandler = event => {
@@ -37,7 +37,7 @@ export const Docket = () => {
 
     const eventsChangeHandler = event => {
 
-        const {name, checked} = event.target
+        const { name, checked } = event.target
         setEventTypes({
             ...eventTypes,
             [name]: checked
@@ -71,11 +71,14 @@ export const Docket = () => {
                         <li>
                             <div>Event Types:</div>
                             <ul>
-                                <li><input type='checkbox' onChange={eventsChangeHandler} name={'courtAppearances'} checked={eventTypes['courtAppearances']}/>Court Appearance</li>
-                                <li><input type='checkbox' onChange={eventsChangeHandler} name={'deadlines'} checked={eventTypes['deadlines']}/>Deadline</li>
-                                <li><input type='checkbox' onChange={eventsChangeHandler} name={'clientAppointments'} checked={eventTypes['clientAppointments']}/>Client Appointment</li>
-                                <li><input type='checkbox' onChange={eventsChangeHandler} name={'otherAppointments'} checked={eventTypes['otherAppointments']}/>Other Appointment</li>
-                                <li><input type='checkbox' onChange={eventsChangeHandler} name={'otherHoursBillable'} checked={eventTypes['otherHoursBillable']}/>Other Hours Billable</li>
+                                {Object.keys(eventTypes).map(type => {
+                                    return (
+                                        <li key={type}>
+                                            <input type='checkbox' id={type} onChange={eventsChangeHandler} name={type} checked={eventTypes[type]} />
+                                            <label htmlFor={type}>{type}</label>
+                                        </li>
+                                    )
+                                })}
                             </ul>
                         </li>
                         <li>

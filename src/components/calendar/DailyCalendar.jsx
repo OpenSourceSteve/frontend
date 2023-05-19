@@ -3,7 +3,7 @@ import { HourBlock } from './HourBlock'
 import { days } from '../../app/days'
 import { months } from '../../app/months'
 
-import styles from './Calendar.module.css'
+import calendarStyles from './Calendar.module.css'
 import dailyStyles from './DailyCalendar.module.css'
 
 export const DailyCalendar = () => {
@@ -15,10 +15,10 @@ export const DailyCalendar = () => {
 
     return (
         <>
-            <div className={styles.docketHeader}>
+            <div>
                 <h1>Docket for {days[day]}, {`${date} ${months[month]} ${year}`}</h1>
             </div>
-            <div className={styles.container}>
+            <div className={calendarStyles.container}>
                 <div className={dailyStyles.dailyCalendar}>
                     <HourBlock time={"9am"} />
                     <HourBlock time={"10am"} />
