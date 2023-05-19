@@ -1,6 +1,7 @@
 import { MonthlyDayBlock } from './MonthlyDayBlock'
 
-import calendarStyles from './Calendar.module.css'
+import { days } from '../../app/days'
+
 import monthlyStyles from './MonthlyCalendar.module.css'
 
 export const MonthlyCalendar = () => {
@@ -12,12 +13,12 @@ export const MonthlyCalendar = () => {
 
     sunday.setDate(sunday.getDate() - days_to_sunday)
 
-    const days = []
+    const monthdays = []
 
     for (let i = 0; i < 35; i++) {
         const date = new Date(sunday)
         date.setDate(sunday.getDate() + i)
-        days.push(date)
+        monthdays.push(date)
     }
 
 
@@ -27,9 +28,13 @@ export const MonthlyCalendar = () => {
             <div>
                 <h1>Monthly View</h1>
             </div>
-            <div className={calendarStyles.container}>
+            <div className={monthlyStyles.monthlyCalendarContainer}>
+                <div className={monthlyStyles.monthlyCalendarHeader} >
+                    {days.map(day => <div key={day}>{day}</div>)}
+                </div>
                 <div className={monthlyStyles.monthlyCalendar}>
-                    {days.map((day, index) => <MonthlyDayBlock day={day} index={index} />)}
+
+                    {monthdays.map((day, index) => <MonthlyDayBlock day={day} index={index} />)}
                 </div>
             </div>
         </>
