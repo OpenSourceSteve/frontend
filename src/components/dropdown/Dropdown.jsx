@@ -10,8 +10,15 @@ export const Dropdown = ({ title }) => {
 
     const [show, setShow] = useState(false)
 
-    const keydownHandler = event => {
-        return event.keyCode !== 13 || setShow(!show);
+    const keydownHandler = ({ target, keyCode }) => {
+        if (keyCode === 13) {
+            if (target.id === "account") {
+                setShow(!show)
+            }
+            else {
+                navigate(`/${target.dataset['href']}`)
+            }
+        }
     }
 
     const offclick = ({ target }) => {
@@ -23,8 +30,6 @@ export const Dropdown = ({ title }) => {
     useEffect(() => {
         window.addEventListener("click", offclick)
     })
-
-
 
     const toggleShow = () => {
         setShow(!show)
@@ -40,9 +45,17 @@ export const Dropdown = ({ title }) => {
                  className={styles.title}
                  onClick={toggleShow}
             >{title}</div>
-            {show && <div><ul className={styles.ul} >
-                {links.map(link => <li><Link key={link} path={link} color={'#41342e'}/></li>)}
-            </ul></div>}
+            {show && (
+                <nav>
+                    <ul>
+                    {links.map(link => (
+                        <li key={link} tabIndex={0} data-href={link} onKeyDown={keydownHandler}>
+                            <Link path={link} color={'#41342e'}/>
+                        </li>
+                    ))}
+                    </ul>
+                </nav>
+            )}
         </div>
     )
 }

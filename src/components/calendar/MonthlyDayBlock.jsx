@@ -1,4 +1,4 @@
-import { months } from '../../app/months'
+import { months } from '../../utils/months'
 
 import monthlyStyles from './MonthlyCalendar.module.css'
 

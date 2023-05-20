@@ -1,7 +1,7 @@
 import { HourBlock } from './HourBlock'
 
-import { days } from '../../app/days'
-import { months } from '../../app/months'
+import { days } from '../../utils/days'
+import { months } from '../../utils/months'
 
 import calendarStyles from './Calendar.module.css'
 import dailyStyles from './DailyCalendar.module.css'

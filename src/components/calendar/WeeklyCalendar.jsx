@@ -1,7 +1,7 @@
 import { WeeklyDayBlock } from './WeeklyDayBlock'
 
-import { days } from '../../app/days'
-import { months } from '../../app/months'
+import { days } from '../../utils/days'
+import { months } from '../../utils/months'
 
 import calendarStyles from './Calendar.module.css'
 import weeklyStyles from './WeeklyCalendar.module.css'

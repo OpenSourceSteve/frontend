@@ -26,26 +26,6 @@
     background-color: lightgray;
 }
 
-/* .account {
-    cursor: pointer;
+.dropdown ul li div {
+    padding-left: 10px;
 }
-
-.dropdown {
-    position:fixed;
-    top: 40px;
-    right: 0px;
-    list-style-type: none;
-    background-color: white;
-    border: 1px solid black;
-    border-radius: 4px;
-    padding: 8px 12px;
-}
-
-.dropdown a {
-    color: #41342e;
-    color: white;
-}
-
-.title {
-    color: green;
-} */

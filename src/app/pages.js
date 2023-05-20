@@ -1,1 +1,6 @@
-export const pages = ["docket", "clients", "cases", "finances"]
+export const pages = [
+    "docket",
+    "clients",
+    "cases",
+    "finances"
+]

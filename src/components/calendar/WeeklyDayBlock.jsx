@@ -1,7 +1,7 @@
 import styles from './WeeklyDayBlock.module.css'
 
-import { days } from '../../app/days'
-import { months } from '../../app/months'
+import { days } from '../../utils/days'
+import { months } from '../../utils/months'
 
 export const WeeklyDayBlock = ({ date }) => {
     return (

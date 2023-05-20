@@ -1,6 +1,6 @@
 import { MonthlyDayBlock } from './MonthlyDayBlock'
 
-import { days } from '../../app/days'
+import { days } from '../../utils/days'
 
 import monthlyStyles from './MonthlyCalendar.module.css'
 

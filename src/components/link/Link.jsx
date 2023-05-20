@@ -13,16 +13,27 @@ export const Link = ({ currentPage, path, color }) => {
             // TODO: POST to /logout
             navigate("/")
         } else {
-            navigate(href)
+            navigate(`/${href}`)
         }
     }
 
-    return (
-        <a href={`/${path}`}
-               className={path === currentPage ? styles.activeLink : styles.link}
+    const keydownHandler = ({ target, keyCode }) => {
+        if (keyCode === 13) {
+            navigate(`/${target.dataset['href']}`)
+        }
+    }
+
+    if (currentPage !== path) {
+        return (
+            <a href={`/${path}`}
+               className={styles.link}
+               onKeyDown={keydownHandler}
                onClick={clickHandler}
-               data-href={`/${path}`}
+               data-href={`${path}`}
                style={{color}}
             >{path}</a>
-    )
+        )
+    }
+
+    return <div className={styles.activeLink} style={{color}}>{path}</div>
 }

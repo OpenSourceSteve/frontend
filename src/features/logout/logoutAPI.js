@@ -3,13 +3,10 @@ import { apiSlice } from '../api/apiSlice';
 export const extendedAPISlice = apiSlice.injectEndpoints({
     endpoints: builder => ({
         login: builder.mutation({
-            query: credentials => ({
-                url: '/login',
-                method: 'POST',
-                headers: {
-                    'content-type': 'application/x-www-form-urlencoded'
-                },
-                body: new URLSearchParams(credentials)
+            query: () => ({
+                url: '/logout',
+                method: 'GET',
+                credentials: 'include',
             }),
             invalidatesTags: ['Profile']
         })
