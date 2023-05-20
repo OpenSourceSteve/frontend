@@ -2,7 +2,7 @@ import { apiSlice } from '../api/apiSlice';
 
 export const extendedAPISlice = apiSlice.injectEndpoints({
     endpoints: builder => ({
-        login: builder.mutation({
+        logout: builder.mutation({
             query: () => ({
                 url: '/logout',
                 method: 'GET',
@@ -13,4 +13,4 @@ export const extendedAPISlice = apiSlice.injectEndpoints({
     })
 })
 
-export const { useLoginMutation } = extendedAPISlice
+export const { useLogoutMutation } = extendedAPISlice

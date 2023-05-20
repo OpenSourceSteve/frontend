@@ -13,7 +13,7 @@ import {
   // FinancesList,
   Finances,
   Login,
-  // Logout,
+  Logout,
   // NoteDetail,
   // NotesList,
   Profile,
@@ -102,10 +102,10 @@ export const pathElementMappingsArray = [
     path: "/login",
     element: <Login />
   },
-  // {
-  //   path: "/logout",
-  //   element: <Logout />
-  // },
+  {
+    path: "/logout",
+    element: <Logout />
+  },
   {
     path: "/profile",
     element: <Profile />

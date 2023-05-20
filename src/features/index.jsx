@@ -4,6 +4,7 @@ import { Docket } from "./docket";
 import { Finances } from "./finances";
 import { Home } from "./home";
 import { Login } from "./login";
+import { Logout } from "./logout";
 import { NotFound } from "./errors";
 import { Profile } from "./profile";
 import { Settings } from "./settings";
@@ -18,6 +19,7 @@ export {
     Finances,
     Home,
     Login,
+    Logout,
     NotFound,
     Profile,
     Settings,

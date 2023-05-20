@@ -1,30 +1,25 @@
 import { useEffect } from "react"
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import { logout } from "./logoutAPI";
+import { useLogoutMutation } from "./logoutAPI";
 
 export const Logout = () => {
-    const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const handleLogout = async () => {
-        try {
-            const responseStatus = await dispatch(logout()).unwrap();
-            if (responseStatus === 204) {
-                navigate("/login")
-            }
-            // TODO: create proper error message
-        } catch (error) {
-            // TODO: create proper error message
-        }
-    }
+    const [logout, { isSuccess }] = useLogoutMutation();
 
     useEffect(() => {
-        handleLogout()
+        logout().unwrap()
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
-    // TODO: change this to a spinner
+    useEffect(() => {
+        if (isSuccess) {
+            navigate("/login")
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isSuccess])
+
+    // TODO: change this to a spinner, add a header, center
     return <div>Logging out...</div>
 }
