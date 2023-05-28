@@ -2,7 +2,8 @@ import { forwardRef, useState } from 'react'
 
 import resourceStyles from '../resourceStyles.module.css'
 
-export const ClientInputModal = forwardRef(({ closeHandler, submitHandler }, ref) => {
+export const ClientInputModal = forwardRef(({ client, closeHandler, submitHandler }, ref) => {
+    client = client || {}
 
     const formFields = [
         { type: "text", name: "firstName", label: "First Name" },
@@ -20,22 +21,24 @@ export const ClientInputModal = forwardRef(({ closeHandler, submitHandler }, ref
     ]
 
     const [clientState, setClientState] = useState({
-        firstName: "",
-        lastName: "",
-        email: "",
-        phone: "",
-        address1: "",
-        address2: "",
-        city: "",
-        state: "",
-        zip: "",
-        dob: "",
-        referralSource: "",
-        createCase: true
+        id: client._links?.self.href.split('/users/')[1] || "",
+        firstName: client.firstName || "",
+        lastName: client.lastName || "",
+        email: client.email || "",
+        phone: client.phone || "",
+        address1: client.address1 || "",
+        address2: client.address2 || "",
+        city: client.city || "",
+        state: client.state || "",
+        zip: client.zip || "",
+        dob: client.dob || "",
+        referralSource: client.referralSource || "",
+        createCase: client._links ? false : true
     })
 
     const resetClientState = () => {
         setClientState({
+            id: "",
             firstName: "",
             lastName: "",
             email: "",
@@ -62,6 +65,7 @@ export const ClientInputModal = forwardRef(({ closeHandler, submitHandler }, ref
     const submitAndReset = () => {
         submitHandler(clientState)
         resetClientState()
+        closeHandler()
     }
 
     const resetAndClose = () => {
@@ -80,7 +84,7 @@ export const ClientInputModal = forwardRef(({ closeHandler, submitHandler }, ref
             <div className={resourceStyles.body}>
                 <form method="dialog">
                     {formFields.map(field => {
-                        if (field.type === "checkbox") {
+                        if (field.type === "checkbox" && !client._links) {
                             return (
                                 <div key={field.name} className={resourceStyles.labelledCheckboxInput}>
                                     <label htmlFor={field.name}>{field.label}</label>
@@ -106,7 +110,7 @@ export const ClientInputModal = forwardRef(({ closeHandler, submitHandler }, ref
                         )
                     })}
                     <div className={resourceStyles.footer}>
-                        <button type="button" onClick={() => submitAndReset()}>Add Client</button>
+                        <button type="button" onClick={() => submitAndReset()}>{client._links ? "Update Client" : "Add Client"}</button>
                         <button type="button" onClick={() => resetAndClose()}>Cancel</button>
                     </div>
                 </form>

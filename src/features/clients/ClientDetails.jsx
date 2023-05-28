@@ -1,15 +1,28 @@
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
-import { useGetClientQuery } from './clientsSlice'
+// import API calls
+import {
+    useGetClientQuery,
+    useUpdateClientMutation
+} from './clientsSlice'
 
+// import components
 import { Header, Link, Main, Sidebar, Section, Footer } from '../../components'
+import { ClientInputModal } from './ClientInputModal'
+
 import { pages } from '../../app/pages'
 
+// import styles
 import resourceStyles from '../resourceStyles.module.css'
+import styles from './Clients.module.css'
 
 export const ClientDetails = () => {
     const navigate = useNavigate()
+
+    const [updateClient, { isError: isUpdateError }] = useUpdateClientMutation()
+
+    const dialogRef = useRef(null)
 
     const params = useParams();
 
@@ -18,7 +31,6 @@ export const ClientDetails = () => {
     const {
         data: client,
         isLoading,
-        isFetching,
         isSuccess,
         isError,
         error
@@ -39,6 +51,21 @@ export const ClientDetails = () => {
         }
     }
 
+    const toggleClientForm = () => {
+        if (dialogRef.current.open) {
+            dialogRef.current.close()
+        } else {
+            dialogRef.current.showModal()
+        }
+    }
+
+    const submitHandler = async client => {
+        if (client.firstName && client.lastName && (client.phone || client.email)) {
+            delete client.createCase
+            await updateClient(client).unwrap()
+        }
+    }
+
     let content
 
     if (isLoading) {
@@ -49,7 +76,7 @@ export const ClientDetails = () => {
                 <div className={resourceStyles.resourceDetailsView}>
                     <div className={resourceStyles.resourceDetailsHeader}>
                         <h2>Client: {client.firstName} {client.lastName}</h2>
-                        <button type="button">Update Client Info</button>
+                        <button onClick={toggleClientForm} type="button">Update Client Info</button>
                     </div>
                     <div>
                         <p>DOB: {client.dob}</p>
@@ -97,6 +124,11 @@ export const ClientDetails = () => {
                 </Section>
             </Main>
             <Footer />
+            {client && <ClientInputModal closeHandler={toggleClientForm}
+                              submitHandler={submitHandler}
+                              ref={dialogRef}
+                              client={client}
+            />}
         </>
     )
 }

@@ -4,13 +4,12 @@ import { useNavigate } from 'react-router-dom'
 // import API calls
 import {
     useCreateClientMutation,
-    useGetClientsQuery,
+    useGetClientsQuery
 } from './clientsSlice';
 
 // import components
 import { Header, Main, Sidebar, Section, Footer } from '../../components'
 import { ClientInputModal } from './ClientInputModal'
-
 
 import { pages } from '../../app/pages'
 
@@ -48,11 +47,6 @@ export const ClientsList = () => {
         }
     }
 
-    const clickHandler = event => {
-        event.preventDefault()
-        navigate(`/clients/${event.target.parentElement.dataset['clientId']}`)
-    }
-
     const toggleClientForm = () => {
         if (dialogRef.current.open) {
             dialogRef.current.close()
@@ -76,10 +70,15 @@ export const ClientsList = () => {
         }
     }
 
+    const clickHandler = event => {
+        event.preventDefault()
+        navigate(`/clients/${event.target.parentElement.dataset['clientId']}`)
+    }
+
     let content
 
     if (isLoading) {
-        content = <h2>Loading...</h2>
+        content = <h2 className={resourceStyles.resourceLoading}>Loading...</h2>
     }
     else if (isSuccess) {
         // A11Y NOTE: Firefox needs onKeyDown handler on anchor, Chrome needs on div & anchor
@@ -136,7 +135,10 @@ export const ClientsList = () => {
                 </Section>
             </Main>
             <Footer />
-            <ClientInputModal closeHandler={toggleClientForm} submitHandler={submitHandler} ref={dialogRef} />
+            <ClientInputModal closeHandler={toggleClientForm}
+                              submitHandler={submitHandler}
+                              ref={dialogRef}
+            />
         </>
     )
 }
