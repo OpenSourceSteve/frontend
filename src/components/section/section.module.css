@@ -6,7 +6,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     overflow: scroll;
     border-left: 1px solid black;
     border-right: 1px solid black;

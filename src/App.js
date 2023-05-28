@@ -3,7 +3,7 @@ import {
   RouterProvider,
 } from "react-router-dom";
 
-import { pathElementMappingsArray } from './pathElementMappingsArray'
+import { pathElementMappingsArray } from "./app/pathElementMappingsArray";
 
 
 const router = createBrowserRouter(pathElementMappingsArray);

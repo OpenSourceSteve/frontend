@@ -1,0 +1,102 @@
+.fullpage {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content:center;
+}
+
+.resourceList {
+    width: 90%;
+}
+
+.resourceListRow:hover {
+    background-color: #f8f9fa;
+    cursor: pointer;
+}
+
+.resourceDetailsView {
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+.resourceDetailsHeader {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.resourceDetailsHeader button {
+    height: 30px;
+}
+
+.resourceLoading {
+    color: black;
+}
+
+dialog::backdrop {
+    background: rgba(0, 0, 0, 0.5);
+}
+
+dialog {
+    border: 1px solid black;
+    border-radius: 10px;
+    max-width: 500px;
+    width: 100%;
+    padding: 0;
+}
+
+dialog .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid black;
+    padding: 10px;
+}
+
+dialog .body {
+    padding: 10px;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content:center;
+    border: 1px black solid;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.labelledTextInput {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 10px 0px;
+}
+
+.labelledTextInput label {
+    margin-right: 5px;
+}
+
+.labelledTextInput input {
+    flex-grow: 1;
+}
+
+.labelledCheckboxInput input {
+    margin: 0px 10px;
+}
+
+dialog .footer {
+    display: flex;
+    justify-content: flex-end;
+}
+
+dialog .footer button {
+    margin: 10px;
+}

@@ -1,11 +1,4 @@
-.main {
-    position: fixed;
-    top: 60px;
-    bottom: 40px;
-    width: 100%;
-}
-
-.section {
+.homepage {
     height: 100%;
     width: 100%;
     display: flex;

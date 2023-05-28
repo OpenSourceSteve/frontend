@@ -1,9 +1,9 @@
 import {
-  // CaseDetails,
+  CaseDetails,
   CasesList,
   // ChargeDetail,
   // ChargesList,
-  // ClientDetails,
+  ClientDetails,
   ClientsList,
   Docket,
   // TODO: Remove Events, Notes, Tasks routes
@@ -23,16 +23,16 @@ import {
   // TaskDetail,
   // TasksList,
   // Terms
-} from "./features"
+} from "../features"
 
 export const pathElementMappingsArray = [
   {
     path: "/cases",
     element: <CasesList />
   },
-  // {
-  //   path: "/cases/:caseId",
-  //   element: <CaseDetails />,
+  {
+    path: "/cases/:caseId",
+    element: <CaseDetails />,
     // children: [
     //   {
     //     path: "#charges",
@@ -68,15 +68,15 @@ export const pathElementMappingsArray = [
     //     element: <TaskDetail />
     //   }
     // ]
-  // },
+  },
   {
     path: "/clients",
     element: <ClientsList />
   },
-  // {
-  //   path: "/clients/:clientId",
-  //   element: <ClientDetails />
-  // },
+  {
+    path: "/clients/:clientId",
+    element: <ClientDetails />
+  },
   {
     path: "/docket",
     element: <Docket />

@@ -19,8 +19,8 @@ export const Navbar = ({ currentPage, pages }) => {
             <ul>
                 {pages.map(page => {
                     return (
-                        <li key={page} tabIndex={page === currentPage ? -1 : 0} data-href={page} onKeyDown={keydownHandler}>
-                            <Link currentPage={currentPage} path={page} color="white"/>
+                        <li key={page} data-href={page} onKeyDown={keydownHandler}>
+                            <Link currentPage={currentPage} path={page} color="white" />
                         </li>
                     )
                 })}

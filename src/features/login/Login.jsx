@@ -2,9 +2,9 @@ import { useState } from "react"
 import { useNavigate } from "react-router-dom";
 
 import { useLoginMutation } from "./loginSlice";
-import { Footer, Header } from "../../components"
+import { Header, Main, Section, Footer } from "../../components"
 
-import styles from './Login.module.css'
+import resourceStyles from '../resourceStyles.module.css'
 
 export const Login = () => {
     const navigate = useNavigate()
@@ -48,12 +48,13 @@ export const Login = () => {
     return (
         <>
             <Header links={links} />
-            <main className={styles.main} >
-                <section className={styles.section}>
-                    <form className={styles.form}>
+            <Main>
+                <Section>
+                    <div className={resourceStyles.fullpage}>
+                    <form className={resourceStyles.form}>
                         <h1 className="">Please log in</h1>
                         <div>
-                            <div className={styles.labelledTextInput}>
+                            <div className={resourceStyles.labelledTextInput}>
                                 <label htmlFor="email">Enter your email:</label>
                                 <input type="email"
                                     name="email"
@@ -64,7 +65,7 @@ export const Login = () => {
                                     required
                                 />
                             </div>
-                            <div className={styles.labelledTextInput}>
+                            <div className={resourceStyles.labelledTextInput}>
                                 <label htmlFor="password">Enter your password:</label>
                                 <input type="password"
                                     name="password"
@@ -79,8 +80,9 @@ export const Login = () => {
                         </div>
                         <button className="" type="button" onClick={handleSubmit}>Sign in</button>
                     </form>
-                </section>
-            </main>
+                    </div>
+                </Section>
+            </Main>
             <Footer />
         </>
     )
