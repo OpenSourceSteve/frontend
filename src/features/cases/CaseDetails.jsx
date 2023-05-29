@@ -1,15 +1,24 @@
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
-import { useGetCaseQuery } from './casesSlice'
+// import API calls
+import {
+    useGetCaseQuery,
+    useUpdateCaseMutation
+} from './casesSlice'
 
+// import components
 import { Header, Link, Main, Sidebar, Section, Footer } from '../../components'
+import { CaseInputModal } from './CaseInputModal'
+
 import { pages } from '../../app/pages'
 
 import resourceStyles from '../resourceStyles.module.css'
 
 export const CaseDetails = () => {
     const navigate = useNavigate()
+
+    const dialogRef = useRef(null)
 
     const params = useParams();
 
@@ -24,14 +33,28 @@ export const CaseDetails = () => {
         error
     } = useGetCaseQuery(caseId)
 
+    const [updateCase, { isEror: isUpdateError }] = useUpdateCaseMutation(caseId)
+
     useEffect(() => {
         if (isError) {
             if (error.status === 403) {
                 navigate("/login")
             }
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [error, isError])
+
+    const toggleCaseForm = () => {
+        if (dialogRef.current.open) {
+            dialogRef.current.close()
+        } else {
+            dialogRef.current.showModal()
+        }
+    }
+
+    const submitHandler = async caseInstance => {
+        await updateCase(caseInstance).unwrap()
+    }
 
 
 
@@ -44,7 +67,7 @@ export const CaseDetails = () => {
                 <div className={resourceStyles.resourceDetailsView}>
                     <div className={resourceStyles.resourceDetailsHeader}>
                         <h2>Case: {caseInstance.caseNumber}</h2>
-                        <button type="button">Update Case Info</button>
+                        <button type="button" onClick={toggleCaseForm} >Update Case Info</button>
                     </div>
                     <div>
                         <div>Court: {caseInstance.court}</div>
@@ -77,6 +100,7 @@ export const CaseDetails = () => {
                 </Section>
             </Main>
             <Footer />
+            {caseInstance && <CaseInputModal caseInstance={caseInstance} ref={dialogRef} submitHandler={submitHandler} closeHandler={toggleCaseForm} />}
         </>
     )
 }

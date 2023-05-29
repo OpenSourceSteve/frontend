@@ -4,8 +4,10 @@ import { CaseClient } from './CaseClient'
 
 import resourceStyles from '../resourceStyles.module.css'
 
-export const CaseInputModal = forwardRef(({ caseInstance, clientId, closeHandler, submitHandler }, ref) => {
+export const CaseInputModal = forwardRef(({ caseInstance, closeHandler, submitHandler }, ref) => {
     caseInstance = caseInstance || {}
+
+    console.log(caseInstance)
 
     const timeoutRef = useRef(0)
     const debounced = useRef(false)
@@ -19,30 +21,30 @@ export const CaseInputModal = forwardRef(({ caseInstance, clientId, closeHandler
     ]
 
     const [caseState, setCaseState] = useState({
-        id: "",
-        caseNumber: "",
-        clientId: "",
-        clientFirstName: "",
-        clientLastName: "",
-        clientName: "",
-        jurisdiction: "",
-        court: "",
-        judge: "",
-        prosecutor: ""
+        id: caseInstance._links?.self.href.split("/cases/")[1] || "",
+        caseNumber: caseInstance.caseNumber || "",
+        clientId: caseInstance._links?.client.href.split("/users/")[1] || "",
+        clientFirstName: caseInstance.clientFirstName || "",
+        clientLastName: caseInstance.clientLastName || "",
+        clientName: caseInstance.clientName || "",
+        jurisdiction: caseInstance.jurisdiction || "",
+        court: caseInstance.court || "",
+        judge: caseInstance.judge || "",
+        prosecutor: caseInstance.prosecutor || ""
     })
 
     const resetCaseState = () => {
         setCaseState({
-            id: "",
-            caseNumber: "",
-            clientId: "",
-            clientFirstName: "",
-            clientLastName: "",
-            clientName: "",
-            jurisdiction: "",
-            court: "",
-            judge: "",
-            prosecutor: ""
+            id: caseInstance._links?.self.href.split("/cases/")[1] || "",
+            caseNumber: caseInstance.caseNumber || "",
+            clientId: caseInstance._links?.client.href.split("/users/")[1] || "",
+            clientFirstName: caseInstance.clientFirstName || "",
+            clientLastName: caseInstance.clientLastName || "",
+            clientName: caseInstance.clientName || "",
+            jurisdiction: caseInstance.jurisdiction || "",
+            court: caseInstance.court || "",
+            judge: caseInstance.judge || "",
+            prosecutor: caseInstance.prosecutor || ""
         })
     }
 
