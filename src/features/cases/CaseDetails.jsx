@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
 // import API calls
@@ -7,8 +7,14 @@ import {
     useUpdateCaseMutation
 } from './casesSlice'
 
+// import resource tabs
+import { EventsTab } from '../events/EventsTab'
+import { ChargesTab } from '../charges/ChargesTab'
+import { NotesTab } from '../notes/NotesTab'
+import { TasksTab } from '../tasks/TasksTab'
+
 // import components
-import { Header, Link, Main, Sidebar, Section, Footer } from '../../components'
+import { Header, Link, Main, Sidebar, Section, TabbedNav, Footer } from '../../components'
 import { CaseInputModal } from './CaseInputModal'
 
 import { pages } from '../../app/pages'
@@ -17,6 +23,15 @@ import resourceStyles from '../resourceStyles.module.css'
 
 export const CaseDetails = () => {
     const navigate = useNavigate()
+
+    const navTabs = [
+        "events",
+        "charges",
+        "notes",
+        "tasks"
+    ]
+
+    const [activeTab, setActiveTab] = useState(navTabs[0])
 
     const dialogRef = useRef(null)
 
@@ -41,7 +56,7 @@ export const CaseDetails = () => {
                 navigate("/login")
             }
         }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [error, isError])
 
     const toggleCaseForm = () => {
@@ -56,27 +71,38 @@ export const CaseDetails = () => {
         await updateCase(caseInstance).unwrap()
     }
 
-
+    const navTabHandler = ({ target }) => {
+        setActiveTab(target.dataset['tab'])
+    }
 
     let content
+
     if (isLoading) {
         <h2 className={resourceStyles.resourceLoading}>Loading...</h2>
     } else if (isSuccess) {
         if (caseInstance) {
             content = (
-                <div className={resourceStyles.resourceDetailsView}>
-                    <div className={resourceStyles.resourceDetailsHeader}>
-                        <h2>Case: {caseInstance.caseNumber}</h2>
-                        <button type="button" onClick={toggleCaseForm} >Update Case Info</button>
+                <>
+                    <div className={resourceStyles.resourceDetailsView}>
+                        <div className={resourceStyles.resourceDetailsHeader}>
+                            <h2>Case: {caseInstance.caseNumber}</h2>
+                            <button type="button" onClick={toggleCaseForm} >Update Case Info</button>
+                        </div>
+                        <div>
+                            <div>Court: {caseInstance.court}</div>
+                            <div>Judge: {caseInstance.judge}</div>
+                            <div>Jurisdiction: {caseInstance.jurisdiction}</div>
+                            <div>Prosecutor: {caseInstance.prosecutor}</div>
+                            <div>Client: {caseInstance._links.client.href}</div>
+                        </div>
                     </div>
-                    <div>
-                        <div>Court: {caseInstance.court}</div>
-                        <div>Judge: {caseInstance.judge}</div>
-                        <div>Jurisdiction: {caseInstance.jurisdiction}</div>
-                        <div>Prosecutor: {caseInstance.prosecutor}</div>
-                        <div>Client: {caseInstance._links.client.href}</div>
-                    </div>
-                </div>
+                    <TabbedNav activeTab={activeTab} tabs={navTabs} navTabHandler={navTabHandler}>
+                        {activeTab === "events" && <EventsTab />}
+                        {activeTab === "charges" && <ChargesTab />}
+                        {activeTab === "notes" && <NotesTab />}
+                        {activeTab === "tasks" && <TasksTab />}
+                    </TabbedNav>
+                </>
             )
         }
         else {

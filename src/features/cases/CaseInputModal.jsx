@@ -7,8 +7,6 @@ import resourceStyles from '../resourceStyles.module.css'
 export const CaseInputModal = forwardRef(({ caseInstance, closeHandler, submitHandler }, ref) => {
     caseInstance = caseInstance || {}
 
-    console.log(caseInstance)
-
     const timeoutRef = useRef(0)
     const debounced = useRef(false)
 

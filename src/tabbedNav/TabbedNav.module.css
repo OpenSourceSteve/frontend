@@ -1,0 +1,27 @@
+.tabbedNav {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    border-bottom: 1px solid black;
+}
+
+.tabbedNav li {
+    text-transform: capitalize;
+    list-style-type: none;
+    padding: 10px 20px;
+    flex-grow: 0;
+    cursor: pointer;
+}
+
+.tabbedNav li.activeTabbedNav {
+    border: 1px solid black;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom: 1px solid white;
+    margin-bottom: -1px;
+    z-index: 100;
+}
+
+.activeTabData {
+    background-color: white;
+}
