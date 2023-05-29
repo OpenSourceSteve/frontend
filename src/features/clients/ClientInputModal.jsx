@@ -84,17 +84,20 @@ export const ClientInputModal = forwardRef(({ client, closeHandler, submitHandle
             <div className={resourceStyles.body}>
                 <form method="dialog">
                     {formFields.map(field => {
-                        if (field.type === "checkbox" && !client._links) {
-                            return (
-                                <div key={field.name} className={resourceStyles.labelledCheckboxInput}>
-                                    <label htmlFor={field.name}>{field.label}</label>
-                                    <input type={field.type}
-                                        name={field.name}
-                                        id={field.name}
-                                        checked={clientState[field.name]}
-                                        onChange={changeHandler} />
-                                </div>
-                            )
+                        if (field.type === "checkbox") {
+                            if (!client._links) {
+                                return (
+                                    <div key={field.name} className={resourceStyles.labelledCheckboxInput}>
+                                        <label htmlFor={field.name}>{field.label}</label>
+                                        <input type={field.type}
+                                            name={field.name}
+                                            id={field.name}
+                                            checked={clientState[field.name]}
+                                            onChange={changeHandler} />
+                                    </div>
+                                )
+                            }
+                            return null
                         }
                         return (
                             (
@@ -109,11 +112,11 @@ export const ClientInputModal = forwardRef(({ client, closeHandler, submitHandle
                             )
                         )
                     })}
-                    <div className={resourceStyles.footer}>
-                        <button type="button" onClick={() => submitAndReset()}>{client._links ? "Update Client" : "Add Client"}</button>
-                        <button type="button" onClick={() => resetAndClose()}>Cancel</button>
-                    </div>
                 </form>
+            </div>
+            <div className={resourceStyles.footer}>
+                <button type="button" onClick={() => submitAndReset()}>{client._links ? "Update Client" : "Add Client"}</button>
+                <button type="button" onClick={() => resetAndClose()}>Cancel</button>
             </div>
         </dialog>
     )

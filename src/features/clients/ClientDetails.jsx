@@ -96,8 +96,8 @@ export const ClientDetails = () => {
                         </div>
                         <div>
                             <h2>Links to:</h2>
-                            <p><Link path={`cases`} text="Client Cases" /></p>
-                            <p><Link path={`finances`} text="Client Finances" /></p>
+                            <Link path={`cases`} text="Client Cases" />
+                            <Link path={`finances`} text="Client Finances" />
                         </div>
                     </div>
                 </div>

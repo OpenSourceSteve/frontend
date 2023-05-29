@@ -1,33 +1,45 @@
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import { useGetCasesQuery } from './casesSlice'
+// import API calls
+import {
+    useCreateCaseMutation,
+    useGetCasesQuery
+} from './casesSlice'
 
+// import components
 import { Header, Main, Sidebar, Section, Footer } from '../../components'
+import { CaseInputModal } from './CaseInputModal'
+
 import { pages } from '../../app/pages'
 
+// import styles
 import resourceStyles from '../resourceStyles.module.css'
 import styles from './Cases.module.css'
 
 export const CasesList = () => {
     const navigate = useNavigate()
 
+    const [createCase, { isEror: isCreateError }] = useCreateCaseMutation()
+
+    const dialogRef = useRef(null)
+
     const {
         data: cases,
         isLoading,
         isSuccess,
-        isError,
+        isError: isLoadError,
         error
     } = useGetCasesQuery()
 
     useEffect(() => {
-        if (isError) {
+        if (isLoadError) {
             if (error.status === 403) {
                 navigate("/login")
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [error, isError])
+    }, [error, isLoadError])
 
     const keyDownHandler = event => {
         if (event.keyCode === 13) {
@@ -35,10 +47,22 @@ export const CasesList = () => {
         }
     }
 
+    const toggleCaseForm = () => {
+        if (dialogRef.current.open) {
+            dialogRef.current.close()
+        } else {
+            dialogRef.current.showModal()
+        }
+    }
+
     const clickHandler = event => {
         event.preventDefault()
-        console.log(event.target.parentElement)
         navigate(event.target.parentElement.dataset['caseId'])
+    }
+
+    const submitHandler = async caseInstance => {
+        delete caseInstance.id
+        await createCase(caseInstance).unwrap()
     }
 
     let content
@@ -70,7 +94,7 @@ export const CasesList = () => {
                 <Sidebar>
                     <ul>
                         <li>
-                            <button>Create New Case</button>
+                            <button onClick={toggleCaseForm} >Create New Case</button>
                         </li>
                         <li>
                             <div>Case Types:</div>
@@ -102,6 +126,7 @@ export const CasesList = () => {
                 </Section>
             </Main>
             <Footer />
+            <CaseInputModal ref={dialogRef} closeHandler={toggleCaseForm} submitHandler={submitHandler} />
         </>
     )
 }
