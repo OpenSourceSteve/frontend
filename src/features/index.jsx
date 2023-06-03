@@ -3,7 +3,7 @@ import { ChargesTab } from "./charges";
 import { ClientDetails, ClientsList } from "./clients";
 import { Docket } from "./docket";
 import { EventsTab } from "./events";
-import { Finances } from "./finances";
+import { Finances, FinancesTab } from "./finances";
 import { Home } from "./home";
 import { Login } from "./login";
 import { Logout } from "./logout";
@@ -23,6 +23,7 @@ export {
     Docket,
     EventsTab,
     Finances,
+    FinancesTab,
     Home,
     Login,
     Logout,

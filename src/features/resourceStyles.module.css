@@ -1,3 +1,8 @@
+.error {
+    color: red;
+    font-weight: 800;
+}
+
 .fullpage {
     height: 100%;
     width: 100%;
@@ -5,6 +10,28 @@
     flex-direction: column;
     align-items: center;
     justify-content:center;
+}
+
+.primary {
+    color: #052c65;
+    background-color: #c2e2ff;
+    border-color: #9ec5fe;
+}
+
+.secondary {
+    color: #2b2f32;
+    background-color: #e2e3e5;
+    border: 1px solid;
+    border-color: #c4c8cb;
+    padding: 20px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.secondary h2 {
+    margin: 0;
 }
 
 .resourceList {

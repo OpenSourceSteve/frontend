@@ -22,6 +22,6 @@
     z-index: 100;
 }
 
-.activeTabData {
-    background-color: white;
+.activeTab {
+    width: 100%;
 }

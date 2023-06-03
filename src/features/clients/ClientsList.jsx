@@ -10,6 +10,7 @@ import {
 // import components
 import { Header, Main, Sidebar, Section, Footer } from '../../components'
 import { ClientInputModal } from './ClientInputModal'
+import { ClientsEmptyState } from './ClientsEmptyState';
 
 import { pages } from '../../app/pages'
 
@@ -31,15 +32,6 @@ export const ClientsList = () => {
         isError: isLoadError,
         error
     } = useGetClientsQuery()
-
-    useEffect(() => {
-        if (isLoadError) {
-            if (error.status === 403) {
-                navigate("/login")
-            }
-        }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [error, isLoadError])
 
     const keyDownHandler = event => {
         if (event.keyCode === 13) {
@@ -82,26 +74,48 @@ export const ClientsList = () => {
     }
     else if (isSuccess) {
         // A11Y NOTE: Firefox needs onKeyDown handler on anchor, Chrome needs on div & anchor
-        content = clients && clients.map(client => (
-            <div key={client.id}
-                tabIndex={0}
-                data-client-id={client.id}
-                onKeyDown={keyDownHandler}
-                onClick={clickHandler}>
-                <a
-                    className={styles.resourceListRow}
-                    onKeyDown={keyDownHandler}
-                    data-client-id={client.id}
-                    onClick={clickHandler}
-                    href={`clients/${client.id}`}
-                >
-                    <div>{client.lastName}</div>
-                    <div>{client.firstName}</div>
-                    <div>{client.phone}</div>
-                    <div>{client.email}</div>
-                </a>
-            </div>
-        ))
+        if (clients.length === 0) {
+            content = <ClientsEmptyState />
+        } else {
+            content = (
+                <div className={resourceStyles.resourceList}>
+                    <div className={styles.resourceListHeader}>
+                        <div>Last Name</div>
+                        <div>First Name</div>
+                        <div>Phone Number</div>
+                        <div>Email</div>
+                    </div>
+                    <div className={resourceStyles.resourceListBody}>
+                        {clients.map(client => (
+                            <div key={client.id}
+                                tabIndex={0}
+                                className={resourceStyles.resourceListRow}
+                                data-client-id={client.id}
+                                onKeyDown={keyDownHandler}
+                                onClick={clickHandler}>
+                                <a
+                                    className={styles.resourceListRow}
+                                    onKeyDown={keyDownHandler}
+                                    data-client-id={client.id}
+                                    onClick={clickHandler}
+                                    href={`clients/${client.id}`}
+                                >
+                                    <div>{client.lastName}</div>
+                                    <div>{client.firstName}</div>
+                                    <div>{client.phone}</div>
+                                    <div>{client.email}</div>
+                                </a>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            )
+        }
+    }
+    else if (isLoadError) {
+        if (error.status === 403) {
+            navigate("/login")
+        }
     }
 
     return (
@@ -109,35 +123,27 @@ export const ClientsList = () => {
             <Header currentPage="clients" pages={pages} />
             <Main>
                 <Sidebar>
-                    <ul>
-                        <li>
-                            <button onClick={toggleClientForm}>Add New Client</button>
-                        </li>
-                        <li>
-                            <div>Filter by client name:</div>
-                            <input type="text" />
-                        </li>
-                    </ul>
+                    {clients?.length > 0 && (
+                        <ul>
+                            <li>
+                                <button onClick={toggleClientForm}>Add New Client</button>
+                            </li>
+                            <li>
+                                <div>Filter by client name:</div>
+                                <input type="text" />
+                            </li>
+                        </ul>
+                    )}
                 </Sidebar>
                 <Section>
                     <h1>Clients</h1>
-                    <div className={resourceStyles.resourceList}>
-                        <div className={styles.resourceListHeader}>
-                            <div>Last Name</div>
-                            <div>First Name</div>
-                            <div>Phone Number</div>
-                            <div>Email</div>
-                        </div>
-                        <div className={resourceStyles.resourceListBody}>
-                            {content}
-                        </div>
-                    </div>
+                    {content}
                 </Section>
             </Main>
             <Footer />
             <ClientInputModal closeHandler={toggleClientForm}
-                              submitHandler={submitHandler}
-                              ref={dialogRef}
+                submitHandler={submitHandler}
+                ref={dialogRef}
             />
         </>
     )

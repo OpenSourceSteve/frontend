@@ -1,27 +1,28 @@
-import { useGetNotesQuery } from "./notesSlice"
+import { useGetFinancesQuery } from "./financesSlice"
 
-export const NotesTab = () => {
+export const FinancesTab = () => {
     const {
-        data: notes,
+        data: finances,
         isLoading,
         isSuccess,
         isError,
         error
-    } = useGetNotesQuery()
+    } = useGetFinancesQuery()
 
     if (isSuccess) {
+        // console.log("data", data)
         // const { _embedded } = data
-        // const { notes } = _embedded
+        // const { finances } = _embedded
         return (
             <>
-                {notes.length === 0 && <div>No notes to show.</div>}
-                {notes?.map(charge => <div>{JSON.stringify(charge)}</div>)}
+                {finances.length === 0 && <div>No finances to show.</div>}
+                {finances?.map(event => <div>{JSON.stringify(event)}</div>)}
             </>
         )
-
     }
 
     if (isError) {
+        console.log(error)
         const { timestamp, status, error: errorError, message, path} = error.data
         const errorInfo = (
             <>
@@ -34,7 +35,7 @@ export const NotesTab = () => {
         )
         return (
             <>
-                <div>This was an error retrieving notes.</div>
+                <div>This was an error retrieving finances.</div>
                 {errorInfo}
             </>
         )

@@ -51,4 +51,4 @@ export const {
   useUpdateClientMutation
 } = extendedAPISlice
 
-export const selectClientsResult = extendedAPISlice.endpoints.getClients.select()
+// export const selectClientsResult = extendedAPISlice.endpoints.getClients.select()

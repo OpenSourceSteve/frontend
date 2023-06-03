@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react'
+import { useState, useRef } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
 // import API calls
@@ -8,14 +8,18 @@ import {
 } from './casesSlice'
 
 // import resource tabs
-import { EventsTab } from '../events/EventsTab'
-import { ChargesTab } from '../charges/ChargesTab'
-import { NotesTab } from '../notes/NotesTab'
-import { TasksTab } from '../tasks/TasksTab'
+import {
+    EventsTab,
+    ChargesTab,
+    NotesTab,
+    TasksTab,
+    FinancesTab
+} from '../index'
 
 // import components
 import { Header, Link, Main, Sidebar, Section, TabbedNav, Footer } from '../../components'
 import { CaseInputModal } from './CaseInputModal'
+import { EventInputModal } from '../events/EventInputModal'
 
 import { pages } from '../../app/pages'
 
@@ -28,12 +32,25 @@ export const CaseDetails = () => {
         "events",
         "charges",
         "notes",
-        "tasks"
+        "tasks",
+        "finances"
+    ]
+
+    const eventOptions = [
+        "Court Appearance",
+        "Deadline",
+        "Client Meeting",
+        "Staff Meeting",
+        "External Meeting",
+        "Other Hours Billable",
+        "Other"
     ]
 
     const [activeTab, setActiveTab] = useState(navTabs[0])
 
-    const dialogRef = useRef(null)
+    const dialogRefs = []
+    dialogRefs['cases'] = useRef(null)
+    dialogRefs['events'] = useRef(null)
 
     const params = useParams();
 
@@ -44,26 +61,17 @@ export const CaseDetails = () => {
         isLoading,
         isFetching,
         isSuccess,
-        isError,
+        isError: isLoadError,
         error
     } = useGetCaseQuery(caseId)
 
     const [updateCase, { isEror: isUpdateError }] = useUpdateCaseMutation(caseId)
 
-    useEffect(() => {
-        if (isError) {
-            if (error.status === 403) {
-                navigate("/login")
-            }
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [error, isError])
-
-    const toggleCaseForm = () => {
-        if (dialogRef.current.open) {
-            dialogRef.current.close()
+    const toggleDialog = (dialog) => {
+        if (dialogRefs[dialog].current.open) {
+            dialogRefs[dialog].current.close()
         } else {
-            dialogRef.current.showModal()
+            dialogRefs[dialog].current.showModal()
         }
     }
 
@@ -86,7 +94,7 @@ export const CaseDetails = () => {
                     <div className={resourceStyles.resourceDetailsView}>
                         <div className={resourceStyles.resourceDetailsHeader}>
                             <h2>Case: {caseInstance.caseNumber}</h2>
-                            <button type="button" onClick={toggleCaseForm} >Update Case Info</button>
+                            <button type="button" onClick={() => toggleDialog("cases")} data-form="case">Update Case Info</button>
                         </div>
                         <div>
                             <div>Court: {caseInstance.court}</div>
@@ -97,16 +105,22 @@ export const CaseDetails = () => {
                         </div>
                     </div>
                     <TabbedNav activeTab={activeTab} tabs={navTabs} navTabHandler={navTabHandler}>
-                        {activeTab === "events" && <EventsTab />}
+                        {activeTab === "events" && <EventsTab caseInstance={caseInstance} eventOptions={eventOptions} />}
                         {activeTab === "charges" && <ChargesTab />}
                         {activeTab === "notes" && <NotesTab />}
                         {activeTab === "tasks" && <TasksTab />}
+                        {activeTab === "finances" && <FinancesTab />}
                     </TabbedNav>
                 </>
             )
         }
         else {
             content = <h2>Client Not Found</h2>
+        }
+    }
+    else if (isLoadError) {
+        if (error.status === 403) {
+            navigate("/login")
         }
     }
 
@@ -119,6 +133,9 @@ export const CaseDetails = () => {
                         <li>
                             <Link path="cases" text="Back to Cases List" />
                         </li>
+                        <li>
+                            {activeTab === "events" && <button onClick={() => toggleDialog("events")} data-form="event">Create New Event</button>}
+                        </li>
                     </ul>
                 </Sidebar>
                 <Section className={resourceStyles.section}>
@@ -126,7 +143,21 @@ export const CaseDetails = () => {
                 </Section>
             </Main>
             <Footer />
-            {caseInstance && <CaseInputModal caseInstance={caseInstance} ref={dialogRef} submitHandler={submitHandler} closeHandler={toggleCaseForm} />}
+            {caseInstance && (
+                <>
+                    <CaseInputModal ref={dialogRefs['cases']}
+                        caseInstance={caseInstance}
+                        submitHandler={submitHandler}
+                        closeHandler={toggleDialog}
+                    />
+                    <EventInputModal ref={dialogRefs['events']}
+                        caseInstance={caseId}
+                        closeHandler={toggleDialog}
+                        client={caseInstance.clientId}
+                        eventOptions={eventOptions}
+                    />
+                </>
+            )}
         </>
     )
 }

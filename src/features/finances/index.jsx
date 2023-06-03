@@ -1,3 +1,4 @@
 import { Finances } from "./Finances"
+import { FinancesTab } from './FinancesTab'
 
-export { Finances }
+export { Finances, FinancesTab }

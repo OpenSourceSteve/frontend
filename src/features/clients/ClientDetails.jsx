@@ -32,18 +32,9 @@ export const ClientDetails = () => {
         data: client,
         isLoading,
         isSuccess,
-        isError,
+        isError: isLoadError,
         error
     } = useGetClientQuery(clientId)
-
-    useEffect(() => {
-        if (isError) {
-            if (error.status === 403) {
-                navigate("/login")
-            }
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [error, isError])
 
     const keyDownHandler = event => {
         if (event.keyCode === 13) {
@@ -105,6 +96,11 @@ export const ClientDetails = () => {
         }
         else {
             content = <h2>Client Not Found</h2>
+        }
+    }
+    else if (isLoadError) {
+        if (error.status === 403) {
+            navigate("/login")
         }
     }
 

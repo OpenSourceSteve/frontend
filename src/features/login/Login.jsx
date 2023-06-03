@@ -9,7 +9,13 @@ import resourceStyles from '../resourceStyles.module.css'
 export const Login = () => {
     const navigate = useNavigate()
 
-    const [login, { isLoading }] = useLoginMutation();
+    const [login, {
+        data,
+        error,
+        isLoading,
+        isSuccess,
+        isError
+    }] = useLoginMutation();
 
     const [state, setState] = useState({
         email: "",
@@ -38,8 +44,10 @@ export const Login = () => {
         try {
             await login(formData).unwrap()
             navigate("/docket")
-        } catch (error) {
-            // TODO: create proper error message
+        } catch ({status, data}) {
+            if (status === 400) {
+                console.log(data.error)
+            }
         }
     }
 
@@ -78,6 +86,7 @@ export const Login = () => {
                                 />
                             </div>
                         </div>
+                        {error && <div className={resourceStyles.error}>{error.data.error}</div>}
                         <button className="" type="button" onClick={handleSubmit}>Sign in</button>
                     </form>
                     </div>

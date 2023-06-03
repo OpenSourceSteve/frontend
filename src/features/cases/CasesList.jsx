@@ -16,6 +16,7 @@ import { pages } from '../../app/pages'
 // import styles
 import resourceStyles from '../resourceStyles.module.css'
 import styles from './Cases.module.css'
+import { CasesEmptyState } from './CasesEmptyState'
 
 export const CasesList = () => {
     const navigate = useNavigate()
@@ -31,15 +32,6 @@ export const CasesList = () => {
         isError: isLoadError,
         error
     } = useGetCasesQuery()
-
-    useEffect(() => {
-        if (isLoadError) {
-            if (error.status === 403) {
-                navigate("/login")
-            }
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [error, isLoadError])
 
     const keyDownHandler = event => {
         if (event.keyCode === 13) {
@@ -71,20 +63,47 @@ export const CasesList = () => {
         content = <h2>Loading...</h2>
     }
     else if (isSuccess) {
-        content = cases && cases.map(caseInstance => (
-            <a key={caseInstance.id}
-                tabIndex={0}
-                className={styles.resourceListRow}
-                onKeyDown={keyDownHandler}
-                onClick={clickHandler}
-                data-case-id={caseInstance.id}
-                href={`cases/${caseInstance.id}`}
-            >
-                <div>{caseInstance.client.lastName}, {caseInstance.client.firstName}</div>
-                <div>{caseInstance.court}</div>
-                <div>{caseInstance.prosecutor}</div>
-            </a>
-        ))
+        if (cases.length === 0) {
+            content = <CasesEmptyState />
+        }
+        else {
+            content = (
+                <div className={resourceStyles.resourceList}>
+                    <div className={styles.resourceListHeader}>
+                        <div>Client</div>
+                        <div>Court</div>
+                        <div>Prosecutor</div>
+                    </div>
+                    <div className={resourceStyles.resourceListBody}>
+                        {cases.map(caseInstance => (
+                            <div key={caseInstance.id}
+                                tabIndex={0}
+                                className={resourceStyles.resourceListRow}
+                                data-case-id={caseInstance.id}
+                                onKeyDown={keyDownHandler}>
+                                <a key={caseInstance.id}
+                                    tabIndex={0}
+                                    className={styles.resourceListRow}
+                                    onKeyDown={keyDownHandler}
+                                    onClick={clickHandler}
+                                    data-case-id={caseInstance.id}
+                                    href={`cases/${caseInstance.id}`}
+                                >
+                                    <div>{caseInstance.client.lastName}, {caseInstance.client.firstName}</div>
+                                    <div>{caseInstance.court}</div>
+                                    <div>{caseInstance.prosecutor}</div>
+                                </a>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            )
+        }
+    }
+    else if (isLoadError) {
+        if (error.status === 403) {
+            navigate("/login")
+        }
     }
 
     return (
@@ -92,37 +111,30 @@ export const CasesList = () => {
             <Header currentPage="cases" pages={pages} />
             <Main>
                 <Sidebar>
-                    <ul>
-                        <li>
-                            <button onClick={toggleCaseForm} >Create New Case</button>
-                        </li>
-                        <li>
-                            <div>Case Types:</div>
-                            <ul>
-                                <li><input type='checkbox' />Open</li>
-                                <li><input type='checkbox' />Closed</li>
-                                <li><input type='checkbox' />Civil</li>
-                                <li><input type='checkbox' />Criminal</li>
-                            </ul>
-                        </li>
-                        <li>
-                            <div>Search:</div>
-                            <input type="text" />
-                        </li>
-                    </ul>
+                    {cases?.length > 0 && (
+                        <ul>
+                            <li>
+                                <button onClick={toggleCaseForm} >Create New Case</button>
+                            </li>
+                            <li>
+                                <div>Case Types:</div>
+                                <ul>
+                                    <li><input type='checkbox' />Open</li>
+                                    <li><input type='checkbox' />Closed</li>
+                                    <li><input type='checkbox' />Civil</li>
+                                    <li><input type='checkbox' />Criminal</li>
+                                </ul>
+                            </li>
+                            <li>
+                                <div>Search:</div>
+                                <input type="text" />
+                            </li>
+                        </ul>
+                    )}
                 </Sidebar>
                 <Section>
                     <h1>Cases</h1>
-                    <div className={resourceStyles.resourceList}>
-                        <div className={styles.resourceListHeader}>
-                            <div>Client</div>
-                            <div>Court</div>
-                            <div>Prosecutor</div>
-                        </div>
-                        <div className={resourceStyles.resourceListBody}>
-                            {content}
-                        </div>
-                    </div>
+                    {content}
                 </Section>
             </Main>
             <Footer />

@@ -77,13 +77,13 @@ export const CaseInputModal = forwardRef(({ caseInstance, closeHandler, submitHa
 
     const resetAndClose = () => {
         resetCaseState()
-        closeHandler()
+        closeHandler("cases")
     }
 
     return (
         <dialog ref={ref} className={resourceStyles.modal}>
             <div className={resourceStyles.header}>
-                <div className={resourceStyles.headerTitle}>Add New Client</div>
+                <div className={resourceStyles.headerTitle}>Create New Case</div>
                 <button className={resourceStyles.headerCloseButton}
                     onClick={resetAndClose}
                 >X</button>

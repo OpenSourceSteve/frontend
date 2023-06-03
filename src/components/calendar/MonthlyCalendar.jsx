@@ -33,8 +33,7 @@ export const MonthlyCalendar = () => {
                     {days.map(day => <div key={day}>{day}</div>)}
                 </div>
                 <div className={monthlyStyles.monthlyCalendar}>
-
-                    {monthdays.map((day, index) => <MonthlyDayBlock day={day} index={index} />)}
+                    {monthdays.map((day, index) => <MonthlyDayBlock key={index} day={day} index={index} />)}
                 </div>
             </div>
         </>

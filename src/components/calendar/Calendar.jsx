@@ -2,15 +2,17 @@ import { DailyCalendar } from './DailyCalendar'
 import { MonthlyCalendar } from './MonthlyCalendar'
 import { WeeklyCalendar} from './WeeklyCalendar'
 
-export const Calendar = ({ view }) => {
+export const Calendar = ({ view, events }) => {
+    events = events || []
+
     if (view === "daily") {
-        return <DailyCalendar />
+        return <DailyCalendar events={events} />
     }
     if (view === "weekly") {
-        return <WeeklyCalendar />
+        return <WeeklyCalendar events={events} />
     }
     if (view === "monthly") {
-        return <MonthlyCalendar />
+        return <MonthlyCalendar events={events} />
     }
     throw new Error("No calendar specified")
 }
