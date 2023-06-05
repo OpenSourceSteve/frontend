@@ -8,12 +8,10 @@ export const Link = ({ currentPage, path, text, color }) => {
     const clickHandler = event => {
         event.preventDefault();
         const href = event.target.dataset['href']
-
         navigate(`/${href}`)
     }
 
     const keydownHandler = ({ target, keyCode }) => {
-        console.log("keydownHandler()")
         if (keyCode === 13) {
             navigate(`/${target.dataset['href']}`)
         }

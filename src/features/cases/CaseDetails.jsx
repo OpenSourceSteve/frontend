@@ -19,7 +19,6 @@ import {
 // import components
 import { Header, Link, Main, Sidebar, Section, TabbedNav, Footer } from '../../components'
 import { CaseInputModal } from './CaseInputModal'
-import { EventInputModal } from '../events/EventInputModal'
 
 import { pages } from '../../app/pages'
 
@@ -36,21 +35,9 @@ export const CaseDetails = () => {
         "finances"
     ]
 
-    const eventOptions = [
-        "Court Appearance",
-        "Deadline",
-        "Client Meeting",
-        "Staff Meeting",
-        "External Meeting",
-        "Other Hours Billable",
-        "Other"
-    ]
-
     const [activeTab, setActiveTab] = useState(navTabs[0])
 
-    const dialogRefs = []
-    dialogRefs['cases'] = useRef(null)
-    dialogRefs['events'] = useRef(null)
+    const dialogRef = useRef(null)
 
     const params = useParams();
 
@@ -67,11 +54,15 @@ export const CaseDetails = () => {
 
     const [updateCase, { isEror: isUpdateError }] = useUpdateCaseMutation(caseId)
 
-    const toggleDialog = (dialog) => {
-        if (dialogRefs[dialog].current.open) {
-            dialogRefs[dialog].current.close()
-        } else {
-            dialogRefs[dialog].current.showModal()
+    const openDialog = (dialog, eventId) => {
+        if (!dialogRef.current.open) {
+            dialogRef.current.showModal()
+        }
+    }
+
+    const closeDialog = dialog => {
+        if (dialogRef.current.open) {
+            dialogRef.current.close()
         }
     }
 
@@ -94,7 +85,7 @@ export const CaseDetails = () => {
                     <div className={resourceStyles.resourceDetailsView}>
                         <div className={resourceStyles.resourceDetailsHeader}>
                             <h2>Case: {caseInstance.caseNumber}</h2>
-                            <button type="button" onClick={() => toggleDialog("cases")} data-form="case">Update Case Info</button>
+                            <button type="button" onClick={() => openDialog("cases")} data-form="case">Update Case Info</button>
                         </div>
                         <div>
                             <div>Court: {caseInstance.court}</div>
@@ -105,7 +96,7 @@ export const CaseDetails = () => {
                         </div>
                     </div>
                     <TabbedNav activeTab={activeTab} tabs={navTabs} navTabHandler={navTabHandler}>
-                        {activeTab === "events" && <EventsTab caseInstance={caseInstance} eventOptions={eventOptions} />}
+                        {activeTab === "events" && <EventsTab caseInstance={caseInstance} />}
                         {activeTab === "charges" && <ChargesTab />}
                         {activeTab === "notes" && <NotesTab />}
                         {activeTab === "tasks" && <TasksTab />}
@@ -134,7 +125,10 @@ export const CaseDetails = () => {
                             <Link path="cases" text="Back to Cases List" />
                         </li>
                         <li>
-                            {activeTab === "events" && <button onClick={() => toggleDialog("events")} data-form="event">Create New Event</button>}
+                            {activeTab === "events" && (
+                                <button onClick={() => openDialog("events")}
+                                    data-form="event">Create New Event</button>
+                            )}
                         </li>
                     </ul>
                 </Sidebar>
@@ -144,19 +138,11 @@ export const CaseDetails = () => {
             </Main>
             <Footer />
             {caseInstance && (
-                <>
-                    <CaseInputModal ref={dialogRefs['cases']}
-                        caseInstance={caseInstance}
-                        submitHandler={submitHandler}
-                        closeHandler={toggleDialog}
-                    />
-                    <EventInputModal ref={dialogRefs['events']}
-                        caseInstance={caseId}
-                        closeHandler={toggleDialog}
-                        client={caseInstance.clientId}
-                        eventOptions={eventOptions}
-                    />
-                </>
+                <CaseInputModal ref={dialogRef}
+                    caseInstance={caseInstance}
+                    submitHandler={submitHandler}
+                    closeHandler={closeDialog}
+                />
             )}
         </>
     )

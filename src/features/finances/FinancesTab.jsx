@@ -10,9 +10,6 @@ export const FinancesTab = () => {
     } = useGetFinancesQuery()
 
     if (isSuccess) {
-        // console.log("data", data)
-        // const { _embedded } = data
-        // const { finances } = _embedded
         return (
             <>
                 {finances.length === 0 && <div>No finances to show.</div>}
@@ -22,7 +19,6 @@ export const FinancesTab = () => {
     }
 
     if (isError) {
-        console.log(error)
         const { timestamp, status, error: errorError, message, path} = error.data
         const errorInfo = (
             <>

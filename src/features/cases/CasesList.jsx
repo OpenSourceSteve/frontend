@@ -1,11 +1,14 @@
-import { useEffect, useRef } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useRef, useEffect } from 'react'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 
 // import API calls
 import {
     useCreateCaseMutation,
     useGetCasesQuery
 } from './casesSlice'
+import {
+    useGetClientsQuery
+} from '../clients/clientsSlice'
 
 // import components
 import { Header, Main, Sidebar, Section, Footer } from '../../components'
@@ -25,13 +28,24 @@ export const CasesList = () => {
 
     const dialogRef = useRef(null)
 
+    const [searchParams] = useSearchParams()
+    const createFor = searchParams.get("createFor")
+
     const {
         data: cases,
-        isLoading,
-        isSuccess,
-        isError: isLoadError,
-        error
+        isLoading: isCasesLoading,
+        isSuccess: isCasesSuccess,
+        isError: isLoadCasesError,
+        error: casesError
     } = useGetCasesQuery()
+
+    const {
+        data: clients,
+        isLoading: isClientsLoading,
+        isSuccess: isClientsSuccess,
+        isError: isLoadClientsError,
+        error: clientsError
+    } = useGetClientsQuery()
 
     const keyDownHandler = event => {
         if (event.keyCode === 13) {
@@ -47,6 +61,12 @@ export const CasesList = () => {
         }
     }
 
+    useEffect(() => {
+        if (createFor !== null && !dialogRef.current.open) {
+            dialogRef.current.showModal()
+        }
+    }, [createFor, dialogRef])
+
     const clickHandler = event => {
         event.preventDefault()
         navigate(event.target.parentElement.dataset['caseId'])
@@ -59,12 +79,12 @@ export const CasesList = () => {
 
     let content
 
-    if (isLoading) {
+    if (isCasesLoading) {
         content = <h2>Loading...</h2>
     }
-    else if (isSuccess) {
+    else if (isCasesSuccess) {
         if (cases.length === 0) {
-            content = <CasesEmptyState />
+            content = <CasesEmptyState hasClients={clients?.length > 0}/>
         }
         else {
             content = (
@@ -80,14 +100,13 @@ export const CasesList = () => {
                                 tabIndex={0}
                                 className={resourceStyles.resourceListRow}
                                 data-case-id={caseInstance.id}
-                                onKeyDown={keyDownHandler}>
-                                <a key={caseInstance.id}
-                                    tabIndex={0}
-                                    className={styles.resourceListRow}
-                                    onKeyDown={keyDownHandler}
-                                    onClick={clickHandler}
-                                    data-case-id={caseInstance.id}
-                                    href={`cases/${caseInstance.id}`}
+                                onKeyDown={keyDownHandler}
+                            >
+                                <a className={styles.resourceListRow}
+                                   onKeyDown={keyDownHandler}
+                                   data-case-id={caseInstance.id}
+                                   onClick={clickHandler}
+                                   href={`cases/${caseInstance.id}`}
                                 >
                                     <div>{caseInstance.client.lastName}, {caseInstance.client.firstName}</div>
                                     <div>{caseInstance.court}</div>
@@ -100,8 +119,8 @@ export const CasesList = () => {
             )
         }
     }
-    else if (isLoadError) {
-        if (error.status === 403) {
+    else if (isLoadCasesError) {
+        if (casesError.status === 403) {
             navigate("/login")
         }
     }
@@ -138,7 +157,11 @@ export const CasesList = () => {
                 </Section>
             </Main>
             <Footer />
-            <CaseInputModal ref={dialogRef} closeHandler={toggleCaseForm} submitHandler={submitHandler} />
+            <CaseInputModal ref={dialogRef}
+                            clientId={createFor}
+                            closeHandler={toggleCaseForm}
+                            submitHandler={submitHandler}
+            />
         </>
     )
 }

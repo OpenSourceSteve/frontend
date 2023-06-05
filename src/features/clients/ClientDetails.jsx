@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useRef } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
 // import API calls
@@ -67,7 +67,9 @@ export const ClientDetails = () => {
                 <div className={resourceStyles.resourceDetailsView}>
                     <div className={resourceStyles.resourceDetailsHeader}>
                         <h2>Client: {client.firstName} {client.lastName}</h2>
-                        <button onClick={toggleClientForm} type="button">Update Client Info</button>
+                        <button onClick={toggleClientForm}
+                            tabIndex={0}
+                            type="button">Update Client Info</button>
                     </div>
                     <div>
                         <p>DOB: {client.dob}</p>
@@ -121,9 +123,9 @@ export const ClientDetails = () => {
             </Main>
             <Footer />
             {client && <ClientInputModal closeHandler={toggleClientForm}
-                              submitHandler={submitHandler}
-                              ref={dialogRef}
-                              client={client}
+                submitHandler={submitHandler}
+                ref={dialogRef}
+                client={client}
             />}
         </>
     )

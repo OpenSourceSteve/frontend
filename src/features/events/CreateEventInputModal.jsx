@@ -1,49 +1,21 @@
 import { forwardRef, useState } from 'react'
 
-import { useCreateEventMutation } from "./eventsSlice"
+import {
+    useCreateEventMutation
+} from "./eventsSlice"
 
 import resourceStyles from '../resourceStyles.module.css'
 
-export const EventInputModal = forwardRef(({ caseInstance, client, closeHandler, event, eventOptions }, ref) => {
-    event = event || {}
-
+export const CreateEventInputModal = forwardRef(({ caseInstance, clientId, closeHandler, eventTypeOptions }, ref) => {
     const [createEvent, { isError: isCreateError }] = useCreateEventMutation()
 
-    const [eventState, setEventState] = useState({
-        client,
-        caseInstance,
-        type: "",
-        startDatetime: new Date(),
-        duration: 0,
-        location: "",
-        link: "",
-        phone: "",
-        title: "",
-        description: ""
-    })
-
-    const resetEventState = () => {
-        setEventState({
-            client,
-            caseInstance,
-            type: "",
-            startDatetime: new Date(),
-            duration: 0,
-            location: "",
-            link: "",
-            phone: "",
-            title: "",
-            description: ""
-        })
-    }
-
-    const eventOptionsArray = eventOptions.reduce((prev, curr, currIndex) => {
-        prev.push({ name: curr, value: currIndex })
+    const eventTypeOptionsArray = eventTypeOptions.reduce((prev, curr, currIndex) => {
+        prev.push({ name: curr, value: currIndex + 1})
         return prev
     }, [])
 
     const formFields = [
-        { name: "startDatetime", type: "datetime-local", label: "Date and Time"},
+        { name: "startDatetime", type: "datetime-local", label: "Date and Time" },
         { name: "title", type: "text", label: "Title" },
         { name: "description", type: "text", label: "Description" },
         { name: "duration", type: "number", label: "Duration (minutes)" },
@@ -52,17 +24,41 @@ export const EventInputModal = forwardRef(({ caseInstance, client, closeHandler,
         { name: "phone", type: "text", label: "Phone" }
     ]
 
+    const [eventState, setEventState] = useState({
+        clientId: clientId,
+        caseInstance: caseInstance,
+        startDatetime: "",
+        title: "",
+        description: "",
+        duration: 0,
+        location: "",
+        link: "",
+        phone: "",
+        type: ""
+    })
+
     const submitAndReset = () => {
         const newEvent = Object.assign({}, eventState)
         // Placate Postgres
-        newEvent.startDatetime = newEvent.startDatetime.slice(0,19).replace("T", " ") + ":00"
+        newEvent.startDatetime = newEvent.startDatetime.slice(0, 19).replace("T", " ") + ":00"
         createEvent(newEvent)
         resetAndClose()
     }
 
     const resetAndClose = () => {
-        resetEventState()
-        closeHandler("events")
+        closeHandler("create")
+        setEventState({
+            clientId: clientId,
+            caseInstance: caseInstance,
+            startDatetime: "",
+            title: "",
+            description: "",
+            duration: 0,
+            location: "",
+            link: "",
+            phone: "",
+            type: ""
+        })
     }
 
     const changeHandler = ({ target }) => {
@@ -78,7 +74,7 @@ export const EventInputModal = forwardRef(({ caseInstance, client, closeHandler,
             <div className={resourceStyles.header}>
                 <div className={resourceStyles.headerTitle}>Create New Event</div>
                 <button className={resourceStyles.headerCloseButton}
-                    onClick={resetAndClose}
+                    // onClick={resetAndClose}
                 >X</button>
             </div>
             <div className={resourceStyles.body}>
@@ -87,7 +83,7 @@ export const EventInputModal = forwardRef(({ caseInstance, client, closeHandler,
                         <label htmlFor="type">Event Type</label>
                         <select id="type" name="type" onChange={changeHandler} value={eventState.type}>
                             <option key="default" value="">Please choose event type</option>
-                            {eventOptionsArray.map(option => <option key={option.value} value={option.value}>{option.name}</option>)}
+                            {eventTypeOptionsArray.map(option => <option key={option.value} value={option.value}>{option.name}</option>)}
                         </select>
                     </div>
                     {formFields.map(field => {
@@ -107,8 +103,8 @@ export const EventInputModal = forwardRef(({ caseInstance, client, closeHandler,
                 </form>
             </div>
             <div className={resourceStyles.footer}>
-                <button type="button" onClick={submitAndReset}>{event._links ? "Update Event" : "Add Event"}</button>
-                <button type="button" onClick={resetAndClose}>Cancel</button>
+                <button type="button" onClick={submitAndReset} >Add Event</button>
+                <button type="button" /* onClick={resetAndClose} */>Cancel</button>
             </div>
         </dialog>
     )

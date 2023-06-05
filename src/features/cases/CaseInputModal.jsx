@@ -4,7 +4,7 @@ import { CaseClient } from './CaseClient'
 
 import resourceStyles from '../resourceStyles.module.css'
 
-export const CaseInputModal = forwardRef(({ caseInstance, closeHandler, submitHandler }, ref) => {
+export const CaseInputModal = forwardRef(({ caseInstance, clientId, closeHandler, submitHandler }, ref) => {
     caseInstance = caseInstance || {}
 
     const timeoutRef = useRef(0)
@@ -21,7 +21,7 @@ export const CaseInputModal = forwardRef(({ caseInstance, closeHandler, submitHa
     const [caseState, setCaseState] = useState({
         id: caseInstance._links?.self.href.split("/cases/")[1] || "",
         caseNumber: caseInstance.caseNumber || "",
-        clientId: caseInstance._links?.client.href.split("/users/")[1] || "",
+        clientId: caseInstance._links?.client.href.split("/users/")[1] || clientId || "",
         clientFirstName: caseInstance.clientFirstName || "",
         clientLastName: caseInstance.clientLastName || "",
         clientName: caseInstance.clientName || "",

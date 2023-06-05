@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 // import API calls
@@ -64,7 +64,7 @@ export const ClientsList = () => {
 
     const clickHandler = event => {
         event.preventDefault()
-        navigate(`/clients/${event.target.parentElement.dataset['clientId']}`)
+        navigate(event.target.parentElement.dataset['clientId'])
     }
 
     let content
@@ -75,7 +75,7 @@ export const ClientsList = () => {
     else if (isSuccess) {
         // A11Y NOTE: Firefox needs onKeyDown handler on anchor, Chrome needs on div & anchor
         if (clients.length === 0) {
-            content = <ClientsEmptyState />
+            content = <ClientsEmptyState openModal={toggleClientForm} />
         } else {
             content = (
                 <div className={resourceStyles.resourceList}>
@@ -91,10 +91,8 @@ export const ClientsList = () => {
                                 tabIndex={0}
                                 className={resourceStyles.resourceListRow}
                                 data-client-id={client.id}
-                                onKeyDown={keyDownHandler}
-                                onClick={clickHandler}>
-                                <a
-                                    className={styles.resourceListRow}
+                                onKeyDown={keyDownHandler}>
+                                <a className={styles.resourceListRow}
                                     onKeyDown={keyDownHandler}
                                     data-client-id={client.id}
                                     onClick={clickHandler}
