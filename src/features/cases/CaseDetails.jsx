@@ -124,12 +124,6 @@ export const CaseDetails = () => {
                         <li>
                             <Link path="cases" text="Back to Cases List" />
                         </li>
-                        <li>
-                            {activeTab === "events" && (
-                                <button onClick={() => openDialog("events")}
-                                    data-form="event">Create New Event</button>
-                            )}
-                        </li>
                     </ul>
                 </Sidebar>
                 <Section className={resourceStyles.section}>

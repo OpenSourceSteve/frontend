@@ -109,6 +109,7 @@ export const EventsTab = ({ caseInstance }) => {
         return (
             <>
                 <div className={resourceStyles.fullpage}>
+                <button onClick={openDialog}>Create New Event</button>
                     <div className={resourceStyles.resourceList}>
                         <div className={styles.resourceListHeader}>
                             <div>Type</div>
