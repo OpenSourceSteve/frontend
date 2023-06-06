@@ -85,8 +85,6 @@ export const UpdateEventInputModal = forwardRef(({ caseInstance, clientId, event
     if (isLoading) {
         content = <div>Loading...</div>
     } else if (isLoadSuccess) {
-        console.log("eventState.startDatetime:", eventState.startDatetime)
-        // const startDatetime = eventState["startDatetime"].slice(0, 19).replace("T", " ") + ":00"
         content = (
             <>
                 <div className={resourceStyles.body}>

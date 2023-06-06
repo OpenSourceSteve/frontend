@@ -1,0 +1,15 @@
+.resourceListHeader {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border-bottom: 1px solid black;
+}
+
+.resourceListRow {
+    padding: 10px 0;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    color: black;
+    text-decoration: none;
+}

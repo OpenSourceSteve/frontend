@@ -97,10 +97,10 @@ export const CaseDetails = () => {
                     </div>
                     <TabbedNav activeTab={activeTab} tabs={navTabs} navTabHandler={navTabHandler}>
                         {activeTab === "events" && <EventsTab caseInstance={caseInstance} />}
-                        {activeTab === "charges" && <ChargesTab />}
-                        {activeTab === "notes" && <NotesTab />}
-                        {activeTab === "tasks" && <TasksTab />}
-                        {activeTab === "finances" && <FinancesTab />}
+                        {activeTab === "charges" && <ChargesTab caseInstance={caseInstance} />}
+                        {activeTab === "notes" && <NotesTab caseInstance={caseInstance} />}
+                        {activeTab === "tasks" && <TasksTab caseInstance={caseInstance} />}
+                        {activeTab === "finances" && <FinancesTab caseInstance={caseInstance} />}
                     </TabbedNav>
                 </>
             )

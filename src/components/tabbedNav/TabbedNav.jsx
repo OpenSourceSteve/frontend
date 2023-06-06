@@ -6,7 +6,7 @@ export const TabbedNav = ({ activeTab, tabs, navTabHandler, children }) => {
             <ul className={styles.tabbedNav}>
                 {tabs.map(tab => {
                     return (
-                        <li key={tab} className={tab === activeTab ? styles.activeTabbedNav : ""} onClick={navTabHandler} data-tab={tab}>{tab}</li>
+                        <li tabIndex={0} key={tab} className={tab === activeTab ? styles.activeTabbedNav : ""} onClick={navTabHandler} data-tab={tab}>{tab}</li>
                     )
                 })}
             </ul>

@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react"
 
 import { useNavigate } from "react-router-dom"
 
-import { useGetEventQuery, useGetEventsQuery } from "./eventsSlice"
+import { useGetEventsQuery } from "./eventsSlice"
 
 import { CreateEventInputModal } from './CreateEventInputModal'
 import { UpdateEventInputModal } from './UpdateEventInputModal'
@@ -49,10 +49,6 @@ export const EventsTab = ({ caseInstance }) => {
         }
     }
 
-    const submitHandler = () => {
-
-    }
-
     const clickHandler = event => {
         event.preventDefault()
         setEventId(event.target.parentElement.dataset['eventId'])
@@ -93,7 +89,10 @@ export const EventsTab = ({ caseInstance }) => {
         setEventId(false)
     }
 
-    if (isSuccess) {
+    if (isLoading) {
+        return <div>Loading...</div>
+    }
+    else if (isSuccess) {
         if (events.length === 0) {
             return (
                 <>
@@ -104,12 +103,13 @@ export const EventsTab = ({ caseInstance }) => {
                         clientId={clientId}
                         eventTypeOptions={eventTypeOptions}
                     />
-                </>)
+                </>
+            )
         }
         return (
             <>
                 <div className={resourceStyles.fullpage}>
-                <button onClick={openDialog}>Create New Event</button>
+                    <button onClick={openDialog}>Create New Event</button>
                     <div className={resourceStyles.resourceList}>
                         <div className={styles.resourceListHeader}>
                             <div>Type</div>

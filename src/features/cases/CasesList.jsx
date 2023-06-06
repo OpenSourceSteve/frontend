@@ -135,7 +135,7 @@ export const CasesList = () => {
                             <li>
                                 <button onClick={toggleCaseForm} >Create New Case</button>
                             </li>
-                            <li>
+                            {/* <li>
                                 <div>Case Types:</div>
                                 <ul>
                                     <li><input type='checkbox' />Open</li>
@@ -147,7 +147,7 @@ export const CasesList = () => {
                             <li>
                                 <div>Search:</div>
                                 <input type="text" />
-                            </li>
+                            </li> */}
                         </ul>
                     )}
                 </Sidebar>
