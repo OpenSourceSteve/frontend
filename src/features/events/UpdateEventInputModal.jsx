@@ -63,7 +63,10 @@ export const UpdateEventInputModal = forwardRef(({ caseInstance, clientId, event
         const updatedEvent = Object.assign({}, eventState)
 
         // Placate Postgres
-        updatedEvent.startDatetime = updatedEvent.startDatetime.slice(0, 19).replace("T", " ") + ":00"
+        updatedEvent.startDatetime = updatedEvent.startDatetime.slice(0, 19).replace("T", " ")
+        if (updatedEvent.startDatetime.length === 16) {
+            updatedEvent.startDatetime += ":00"
+        }
         updateEvent(updatedEvent)
         resetAndClose()
     }
