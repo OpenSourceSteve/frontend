@@ -19,7 +19,15 @@ export const extendedAPISlice = apiSlice.injectEndpoints({
       providesTags: (result, error, arg) => [{ type: 'Event', id: arg }]
     }),
     getEvents: builder.query({
-      query: () => '/events',
+      query: ({ caseId, dateRange }) => {
+        if (caseId) {
+            return `/events?case=${caseId}`
+        }
+        if (dateRange) {
+            return `/events?date-range=${dateRange}`
+        }
+        return '/events'
+      },
       providesTags: (result = [], error, arg) => [
         'Event',
         ...result.map(({ id }) => ({ type: 'Event', id }))

@@ -1,0 +1,7 @@
+.eventBlock {
+    border: 1px solid black;
+    padding: 10px;
+    border-radius: 10px;
+    position: absolute;
+    margin-left: 10px;
+}

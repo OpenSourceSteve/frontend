@@ -21,13 +21,21 @@ export const Docket = () => {
 
     const [view, setView] = useState(views[0])
 
+    const today = new Date()
+    const todayStr = today.toISOString().slice(0,10)
+    const tomorrow = new Date()
+    tomorrow.setDate(today.getDate() + 1)
+    const tomorrowStr = tomorrow.toISOString().slice(0,10)
+    // const sunday = new Date()
+    // const saturday = new Date()
+
     const {
         data: events,
         isLoading,
         isSuccess,
         isError: isLoadError,
         error
-    } = useGetEventsQuery()
+    } = useGetEventsQuery({dateRange: `${todayStr}to${tomorrowStr}`})
 
     let content
 
@@ -46,7 +54,13 @@ export const Docket = () => {
         if (error.status === 403) {
             navigate("/login")
         }
-        content = <div>There was an error loading data.</div>
+        console.log(error)
+        content = (
+            <>
+                <div>There was an error loading Docket data.</div>
+                <div>{JSON.stringify(error)}</div>
+            </>
+        )
     }
 
     return (

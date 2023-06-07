@@ -15,8 +15,8 @@ export const CreateEventInputModal = forwardRef(({ caseInstance, clientId, close
     }, [])
 
     const formFields = [
-        { name: "startDatetime", type: "datetime-local", label: "Date and Time" },
-        { name: "title", type: "text", label: "Title" },
+        { name: "startDatetime", type: "datetime-local", label: "Date and Time", required: true },
+        { name: "title", type: "text", label: "Title", required: true },
         { name: "description", type: "text", label: "Description" },
         { name: "duration", type: "number", label: "Duration (minutes)" },
         { name: "location", type: "text", label: "Location" },
@@ -95,7 +95,8 @@ export const CreateEventInputModal = forwardRef(({ caseInstance, clientId, close
                                         name={field.name}
                                         id={field.name}
                                         value={eventState[field.name]}
-                                        onChange={changeHandler} />
+                                        onChange={changeHandler}
+                                    />
                                 </div>
                             )
                         )

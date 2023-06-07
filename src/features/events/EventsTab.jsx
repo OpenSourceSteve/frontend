@@ -9,6 +9,8 @@ import { UpdateEventInputModal } from './UpdateEventInputModal'
 
 import { EventsEmptyState } from "./EventsEmptyState"
 
+import { eventTypeOptions } from "../../app/eventTypeOptions"
+
 import resourceStyles from '../resourceStyles.module.css'
 import styles from './Events.module.css'
 
@@ -29,17 +31,7 @@ export const EventsTab = ({ caseInstance }) => {
         isSuccess,
         isError,
         error
-    } = useGetEventsQuery()
-
-    const eventTypeOptions = [
-        "Court Appearance",
-        "Deadline",
-        "Client Meeting",
-        "Staff Meeting",
-        "External Meeting",
-        "Other Hours Billable",
-        "Other"
-    ]
+    } = useGetEventsQuery({ caseId })
 
     const keyDownHandler = ({ keyCode, target }, eventResourceId) => {
         if (keyCode === 13) {
@@ -168,6 +160,7 @@ export const EventsTab = ({ caseInstance }) => {
         if (error.status === 403) {
             navigate("/login")
         }
+        console.log(error)
         const { timestamp, status, error: errorError, message, path } = error.data
         const errorInfo = (
             <>

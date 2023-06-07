@@ -63,7 +63,7 @@ export const UpdateEventInputModal = forwardRef(({ caseInstance, clientId, event
         const updatedEvent = Object.assign({}, eventState)
 
         // Placate Postgres
-        updatedEvent.startDatetime = updatedEvent.startDatetime.slice(0, 19).replace("T", " ")
+        updatedEvent.startDatetime = updatedEvent.startDatetime.slice(0, 19).replace("T", " ") + ":00"
         updateEvent(updatedEvent)
         resetAndClose()
     }
@@ -130,7 +130,6 @@ export const UpdateEventInputModal = forwardRef(({ caseInstance, clientId, event
         content = <div>There was an error retrieving event data.</div>
     }
 
-    console.log("content:", content)
     return (
         <dialog ref={ref} className={resourceStyles.modal}>
             <div className={resourceStyles.header}>
