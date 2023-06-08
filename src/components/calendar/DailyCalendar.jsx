@@ -4,6 +4,7 @@ import { CalendarEmptyState } from './CalendarEmptyState'
 
 // import static data
 import { eventTypeOptions } from "../../app/eventTypeOptions"
+import { hours } from '../../utils/hours'
 import { days } from '../../utils/days'
 import { months } from '../../utils/months'
 
@@ -29,22 +30,12 @@ export const DailyCalendar = ({ events }) => {
                     <CalendarEmptyState />
                 )}
                 <div className={dailyStyles.dailyCalendar}>
-                    <HourBlock time={"9am"} >
-                        <EventBlock event={events[0]} />
-                    </HourBlock>
-                    <HourBlock time={"10am"} >
-                        <EventBlock event={events[1]} />
-                    </HourBlock>
-                    <HourBlock time={"11am"} ></HourBlock>
-                    <HourBlock time={"12pm"}></HourBlock>
-                    <HourBlock time={"1pm"} ></HourBlock>
-                    <HourBlock time={"2pm"} ></HourBlock>
-                    <HourBlock time={"3pm"} ></HourBlock>
-                    <HourBlock time={"4pm"} ></HourBlock>
-                    <HourBlock time={"5pm"} ></HourBlock>
-                    <HourBlock time={"6pm"} ></HourBlock>
-                    <HourBlock time={"7pm"} ></HourBlock>
-                    <HourBlock time={"8pm"} ></HourBlock>
+                    {hours.map(hour => <HourBlock key={hour} time={hour} />)}
+                    {events.map(event => {
+                    return (
+                        <EventBlock key={event.id} event={event} />
+                    )
+                })}
                 </div>
             </div>
         </>
