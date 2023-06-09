@@ -8,11 +8,12 @@ import resourceStyles from '../resourceStyles.module.css'
 
 export const UpdateEventInputModal = forwardRef(({ caseInstance, clientId, eventId, eventTypeOptions, closeHandler }, ref) => {
     const { data: eventData, isLoading, isSuccess: isLoadSuccess, isError: isLoadError, error: loadError } = useGetEventQuery(eventId)
-    const [ updateEvent, {data: updatedEventData,
-                          isFetching,
-                          isUpdateSuccess,
-                          isUpdateError,
-                          error: updateError
+
+    const [updateEvent, { data: updatedEventData,
+        isFetching,
+        isUpdateSuccess,
+        isUpdateError,
+        error: updateError
     }] = useUpdateEventMutation()
 
     const eventTypeOptionsArray = eventTypeOptions.reduce((prev, curr, currIndex) => {
@@ -57,22 +58,12 @@ export const UpdateEventInputModal = forwardRef(({ caseInstance, clientId, event
             link: eventData?.link || "",
             phone: eventData?.phone || ""
         })
-    }, [eventData])
+    }, [caseInstance, clientId, eventData])
 
     const submitAndReset = () => {
-        const updatedEvent = Object.assign({}, eventState)
-
-        // Placate Postgres
-        updatedEvent.startDatetime = updatedEvent.startDatetime.slice(0, 19).replace("T", " ")
-        if (updatedEvent.startDatetime.length === 16) {
-            updatedEvent.startDatetime += ":00"
-        }
-        updateEvent(updatedEvent)
-        resetAndClose()
-    }
-
-    const resetAndClose = () => {
         closeHandler("update")
+        eventState.startDatetime = eventState.startDatetime.replace("T", " ") + ":00"
+        updateEvent(eventState)
     }
 
     const changeHandler = ({ target }) => {
@@ -88,47 +79,53 @@ export const UpdateEventInputModal = forwardRef(({ caseInstance, clientId, event
     if (isLoading) {
         content = <div>Loading...</div>
     } else if (isLoadSuccess) {
-        content = (
-            <>
-                <div className={resourceStyles.body}>
-                    <form method="dialog">
-                        <div key="type" className={resourceStyles.labelledTextInput}>
-                            <label htmlFor="type">Event Type</label>
-                            <select id="type" name="type" onChange={changeHandler} value={eventState.type}>
-                                <option key="default" value="">Please choose event type</option>
-                                {eventTypeOptionsArray.map(option => <option key={option.value} value={option.value} >{option.name}</option>)}
-                            </select>
-                        </div>
-                        <div key="startDateTime" className={resourceStyles.labelledTextInput}>
-                                        <label htmlFor="startDatetime">Date and Time</label>
-                                        <input type="datetime-local"
-                                            name="startDatetime"
-                                            id="startDatetime"
-                                            value={eventState.startDatetime.slice(0,16)}
-                                            onChange={changeHandler} />
-                                    </div>
-                        {formFields.map(field => {
-                            return (
-                                (
-                                    <div key={field.name} className={resourceStyles.labelledTextInput}>
-                                        <label htmlFor={field.name}>{field.label}</label>
-                                        <input type={field.type}
-                                            name={field.name}
-                                            id={field.name}
-                                            value={eventState[field.name]}
-                                            onChange={changeHandler} />
-                                    </div>
+        if (eventState.startDatetime) {
+            const startDatetime = new Date(eventState.startDatetime)
+            startDatetime.setTime(startDatetime.getTime() - (startDatetime.getTimezoneOffset() * 60 * 1000))
+            content = (
+                <>
+                    <div className={resourceStyles.body}>
+                        <form method="dialog">
+                            <div key="type" className={resourceStyles.labelledTextInput}>
+                                <label htmlFor="type">Event Type</label>
+                                <select id="type" name="type" onChange={changeHandler} value={eventState.type}>
+                                    <option key="default" value="">Please choose event type</option>
+                                    {eventTypeOptionsArray.map(option => <option key={option.value} value={option.value} >{option.name}</option>)}
+                                </select>
+                            </div>
+                            <div key="startDateTime" className={resourceStyles.labelledTextInput}>
+                                <label htmlFor="startDatetime">Date and Time</label>
+                                <input type="datetime-local"
+                                    name="startDatetime"
+                                    id="startDatetime"
+                                    value={startDatetime.toISOString().slice(0, 16)}
+                                    onChange={changeHandler} />
+                            </div>
+                            {formFields.map(field => {
+                                return (
+                                    (
+                                        <div key={field.name} className={resourceStyles.labelledTextInput}>
+                                            <label htmlFor={field.name}>{field.label}</label>
+                                            <input type={field.type}
+                                                name={field.name}
+                                                id={field.name}
+                                                value={eventState[field.name]}
+                                                onChange={changeHandler} />
+                                        </div>
+                                    )
                                 )
-                            )
-                        })}
-                    </form>
-                </div>
-                <div className={resourceStyles.footer}>
-                    <button type="button" onClick={submitAndReset} >Update Event</button>
-                    <button type="button" onClick={() => closeHandler("update")} >Cancel</button>
-                </div>
-            </>
-        )
+                            })}
+                        </form>
+                    </div>
+                    <div className={resourceStyles.footer}>
+                        <button type="button" onClick={submitAndReset} >Update Event</button>
+                        <button type="button" onClick={() => closeHandler("update")} >Cancel</button>
+                    </div>
+                </>
+            )
+        } else {
+            content = <div>Loading...</div>
+        }
     } else if (isLoadError) {
         content = <div>There was an error retrieving event data.</div>
     }

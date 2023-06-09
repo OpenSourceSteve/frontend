@@ -1,14 +1,17 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 
 // import API calls
 import { useGetEventsQuery } from '../events/eventsSlice'
+
+import { CreateEventInputModal } from '../events/CreateEventInputModal'
 
 // import UI and static data
 import { DocketSidebar } from './DocketSidebar'
 import { Welcome } from './Welcome'
 import { Header, Main, Sidebar, Section, Footer, Calendar } from '../../components'
 import { pages } from '../../app/pages'
+import { eventTypeOptions } from '../../app/eventTypeOptions'
 
 export const Docket = () => {
     const navigate = useNavigate()
@@ -18,6 +21,8 @@ export const Docket = () => {
         'weekly',
         'monthly'
     ]
+
+    const createEventDialogRef = useRef(1)
 
     const [searchParams] = useSearchParams()
     const date = searchParams.get("date")
@@ -48,6 +53,18 @@ export const Docket = () => {
         error: nextError
     } = useGetEventsQuery({ next: true })
 
+    const openDialog = () => {
+        if (!createEventDialogRef.current.open) {
+            createEventDialogRef.current.showModal()
+        }
+    }
+
+    const closeDialog = mode => {
+        if (createEventDialogRef.current.open) {
+            createEventDialogRef.current.close()
+        }
+    }
+
     let content
 
     if (isLoading) {
@@ -61,7 +78,7 @@ export const Docket = () => {
                 const startDateStr = nextEvent[0].startDatetime.slice(0, 10);
                 const endDate = new Date(startDateStr)
                 endDate.setDate(endDate.getDate() + 1)
-                const endDateStr = endDate.toISOString().slice(0,10)
+                const endDateStr = endDate.toISOString().slice(0, 10)
                 content = (
                     <>
                         <div>You don't have any events scheduled today.</div>
@@ -104,6 +121,10 @@ export const Docket = () => {
                 </Sidebar>
                 <Section>
                     {content}
+                    <CreateEventInputModal ref={createEventDialogRef}
+                        closeHandler={closeDialog}
+                        eventTypeOptions={eventTypeOptions}
+                    />
                 </Section>
             </Main>
             <Footer />

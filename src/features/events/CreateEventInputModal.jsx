@@ -38,15 +38,13 @@ export const CreateEventInputModal = forwardRef(({ caseInstance, clientId, close
     })
 
     const submitAndReset = () => {
-        const newEvent = Object.assign({}, eventState)
-        // Placate Postgres
-        newEvent.startDatetime = newEvent.startDatetime.slice(0, 19).replace("T", " ") + ":00"
-        createEvent(newEvent)
-        resetAndClose()
+        closeHandler("create")
+        eventState.startDatetime = eventState.startDatetime.replace("T", " ") + ":00"
+        createEvent(eventState)
+        reset()
     }
 
-    const resetAndClose = () => {
-        closeHandler("create")
+    const reset = () => {
         setEventState({
             clientId: clientId,
             caseInstance: caseInstance,
@@ -63,6 +61,7 @@ export const CreateEventInputModal = forwardRef(({ caseInstance, clientId, close
 
     const changeHandler = ({ target }) => {
         const { checked, name, type, value } = target
+        console.log(name, type, value)
         setEventState({
             ...eventState,
             [name]: type === 'checkbox' ? checked : value

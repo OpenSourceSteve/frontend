@@ -64,7 +64,6 @@ export const EventsTab = ({ caseInstance }) => {
                 createEventDialogRef.current.showModal()
             }
         }
-
     }
 
     const closeDialog = mode => {

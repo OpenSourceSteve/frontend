@@ -8,11 +8,8 @@ import weeklyStyles from './WeeklyCalendar.module.css'
 
 export const WeeklyCalendar = () => {
     const today = new Date()
-
     const sunday = new Date(today);
-
     const days_to_sunday = today.getDay() % 7
-
     sunday.setDate(sunday.getDate() - days_to_sunday)
 
     const datesOfWeek = []
