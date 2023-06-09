@@ -61,7 +61,6 @@ export const CreateEventInputModal = forwardRef(({ caseInstance, clientId, close
 
     const changeHandler = ({ target }) => {
         const { checked, name, type, value } = target
-        console.log(name, type, value)
         setEventState({
             ...eventState,
             [name]: type === 'checkbox' ? checked : value

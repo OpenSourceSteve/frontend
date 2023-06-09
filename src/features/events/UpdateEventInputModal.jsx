@@ -62,7 +62,10 @@ export const UpdateEventInputModal = forwardRef(({ caseInstance, clientId, event
 
     const submitAndReset = () => {
         closeHandler("update")
-        eventState.startDatetime = eventState.startDatetime.replace("T", " ") + ":00"
+        if (eventState.startDatetime.length === 16) {
+            eventState.startDatetime += ":00"
+        }
+        eventState.startDatetime = eventState.startDatetime.replace("T", " ").slice(0, 19)
         updateEvent(eventState)
     }
 
@@ -81,7 +84,26 @@ export const UpdateEventInputModal = forwardRef(({ caseInstance, clientId, event
     } else if (isLoadSuccess) {
         if (eventState.startDatetime) {
             const startDatetime = new Date(eventState.startDatetime)
-            startDatetime.setTime(startDatetime.getTime() - (startDatetime.getTimezoneOffset() * 60 * 1000))
+            const years = startDatetime.getFullYear()
+            let months = startDatetime.getMonth() + 1
+            if (months < 10) {
+                months = "0" + months
+            }
+            let date = startDatetime.getDate()
+            if (date < 10) {
+                date = "0" + date
+            }
+            let hours = startDatetime.getHours()
+            if (hours < 10) {
+                hours = "0" + hours
+            }
+            let minutes = startDatetime.getMinutes()
+            if (minutes < 10) {
+                minutes = "0" + minutes
+            }
+            const adjustedTime = years + "-" + months + "-" + date + "T" + hours + ":" + minutes
+            eventState.startDatetime = adjustedTime
+
             content = (
                 <>
                     <div className={resourceStyles.body}>
@@ -98,7 +120,7 @@ export const UpdateEventInputModal = forwardRef(({ caseInstance, clientId, event
                                 <input type="datetime-local"
                                     name="startDatetime"
                                     id="startDatetime"
-                                    value={startDatetime.toISOString().slice(0, 16)}
+                                    value={eventState.startDatetime.slice(0, 16)}
                                     onChange={changeHandler} />
                             </div>
                             {formFields.map(field => {

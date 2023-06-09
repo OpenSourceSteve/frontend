@@ -114,6 +114,7 @@ export const EventsTab = ({ caseInstance }) => {
                                 const startDatetime = new Date(event.startDatetime)
                                 const startDate = startDatetime.toLocaleDateString()
                                 const startTime = startDatetime.toLocaleTimeString()
+                                const adjustedStartTime = startTime.split(":")[0] + ":" + startTime.split(":")[1] + " " + startTime.split(" ")[1]
                                 return (
                                     <div key={event.id}
                                         tabIndex={0}
@@ -129,7 +130,7 @@ export const EventsTab = ({ caseInstance }) => {
                                         >
                                             <div>{eventTypeOptions[event.type - 1] || ""}</div>
                                             <div>{startDate}</div>
-                                            <div>{startTime}</div>
+                                            <div>{adjustedStartTime}</div>
                                             <div>{event.duration || ""}</div>
                                             <div>{event.title || ""}</div>
                                         </a>
