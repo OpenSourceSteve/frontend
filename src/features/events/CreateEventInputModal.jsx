@@ -72,7 +72,7 @@ export const CreateEventInputModal = forwardRef(({ caseInstance, clientId, close
             <div className={resourceStyles.header}>
                 <div className={resourceStyles.headerTitle}>Create New Event</div>
                 <button className={resourceStyles.headerCloseButton}
-                    // onClick={resetAndClose}
+                    onClick={() => closeHandler("create")}
                 >X</button>
             </div>
             <div className={resourceStyles.body}>
@@ -103,7 +103,7 @@ export const CreateEventInputModal = forwardRef(({ caseInstance, clientId, close
             </div>
             <div className={resourceStyles.footer}>
                 <button type="button" onClick={submitAndReset} >Add Event</button>
-                <button type="button" /* onClick={resetAndClose} */>Cancel</button>
+                <button type="button" onClick={() => closeHandler("create")} >Cancel</button>
             </div>
         </dialog>
     )
