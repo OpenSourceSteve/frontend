@@ -12,6 +12,10 @@
     justify-content:center;
 }
 
+.fullwidth {
+    width: 100%;
+}
+
 .primary {
     color: #052c65;
     background-color: #c2e2ff;

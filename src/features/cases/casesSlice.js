@@ -27,6 +27,10 @@ export const extendedAPISlice = apiSlice.injectEndpoints({
         ...result.map(({ id }) => ({ type: 'Case', id }))
       ]
     }),
+    getCasesByClientId: builder.query({
+      query: (clientId) => `/cases?client=${clientId}`,
+      provideTags: ['PotentialCase']
+    }),
     getCasesWithNumber: builder.query({
       query: (caseNumber) => `/cases?number=${caseNumber}`,
       provideTags: ['PotentialCase']
@@ -49,6 +53,7 @@ export const {
     useCreateCaseMutation,
     useGetCaseQuery,
     useGetCasesQuery,
+    useGetCasesByClientIdQuery,
     useGetCasesWithNumberQuery,
     useUpdateCaseMutation
 } = extendedAPISlice

@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
 // import API calls
@@ -7,8 +7,11 @@ import {
     useUpdateClientMutation
 } from './clientsSlice'
 
+import { CasesTab } from '../cases/CasesTab'
+import { FinancesTab } from '../finances'
+
 // import components
-import { Header, Link, Main, Sidebar, Section, Footer } from '../../components'
+import { Header, Link, Main, Sidebar, Section, TabbedNav, Footer } from '../../components'
 import { ClientInputModal } from './ClientInputModal'
 
 import { pages } from '../../app/pages'
@@ -19,6 +22,13 @@ import styles from './Clients.module.css'
 
 export const ClientDetails = () => {
     const navigate = useNavigate()
+
+    const navTabs = [
+        "cases",
+        "finances"
+    ]
+
+    const [activeTab, setActiveTab] = useState(navTabs[0])
 
     const [updateClient, { isError: isUpdateError }] = useUpdateClientMutation()
 
@@ -57,6 +67,10 @@ export const ClientDetails = () => {
         }
     }
 
+    const navTabHandler = ({ target }) => {
+        setActiveTab(target.dataset['tab'])
+    }
+
     let content
 
     if (isLoading) {
@@ -71,7 +85,7 @@ export const ClientDetails = () => {
                             tabIndex={0}
                             type="button">Update Client Info</button>
                     </div>
-                    <div>
+                    <div className={resourceStyles.fullwidth}>
                         <p>DOB: {client.dob}</p>
                         <div>
                             <h2>Contact Info</h2>
@@ -87,11 +101,10 @@ export const ClientDetails = () => {
                             <p>State: {client.state}</p>
                             <p>Zip: {client.zip}</p>
                         </div>
-                        <div>
-                            <h2>Links to:</h2>
-                            <Link path={`cases`} text="Client Cases" />
-                            <Link path={`finances`} text="Client Finances" />
-                        </div>
+                        <TabbedNav activeTab={activeTab} tabs={navTabs} navTabHandler={navTabHandler}>
+                            {activeTab === "cases" && <CasesTab clientId={clientId} />}
+                            {activeTab === "finances" && <FinancesTab clientId={clientId} />}
+                        </TabbedNav>
                     </div>
                 </div>
             )
