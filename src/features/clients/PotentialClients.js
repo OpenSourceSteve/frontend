@@ -1,6 +1,6 @@
-import { useGetClientsWithNameQuery } from "../clients/clientsSlice"
+import { useGetClientsWithNameQuery } from "./clientsSlice"
 
-import styles from './Cases.module.css'
+import styles from './Clients.module.css'
 
 export const PotentialClients = ({ partialName, clientHandler }) => {
 
@@ -12,7 +12,6 @@ export const PotentialClients = ({ partialName, clientHandler }) => {
                 {potentialClients.map(potentialClient => (
                     <li key={potentialClient.id}>
                         <div
-                            className=""
                             onClick={() => clientHandler(potentialClient)}
                             data-client-id={potentialClient.id}
                         >{potentialClient.firstName} {potentialClient.lastName}</div>

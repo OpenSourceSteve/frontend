@@ -1,6 +1,6 @@
 import { forwardRef, useRef, useState } from 'react'
 
-import { CaseClient } from './CaseClient'
+import { ClientSelector } from '../clients/ClientSelector'
 
 import resourceStyles from '../resourceStyles.module.css'
 
@@ -90,7 +90,7 @@ export const CaseInputModal = forwardRef(({ caseInstance, clientId, closeHandler
             </div>
             <div className={resourceStyles.body}>
                 <form method="dialog">
-                    <CaseClient clientId={caseState.clientId}
+                    <ClientSelector clientId={caseState.clientId}
                                 clientName={caseState.clientName}
                                 clientHandler={clientHandler}
                                 changeHandler={changeHandler}

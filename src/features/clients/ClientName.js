@@ -1,4 +1,4 @@
-import { useGetClientQuery } from '../clients/clientsSlice'
+import { useGetClientQuery } from './clientsSlice'
 
 export const ClientName = ({ clientId }) => {
 

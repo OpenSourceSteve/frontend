@@ -2,14 +2,14 @@ import { ClientName } from './ClientName'
 import { PotentialClients } from './PotentialClients'
 
 import resourceStyles from '../resourceStyles.module.css'
-import styles from './Cases.module.css'
+import styles from './Clients.module.css'
 
-export const CaseClient = ({ clientId, clientName, changeHandler, clientHandler, debounced }) => {
+export const ClientSelector = ({ clientId, clientName, changeHandler, clientHandler, debounced }) => {
     return (
         <div className={styles.dropdownContainer}>
             <div className={resourceStyles.labelledTextInput}>
                 <label htmlFor='clientName' className="">Client</label>
-                {clientId === "" ? (
+                {clientId === "" && (
                     <>
                         <input type="text"
                             id="clientName"
@@ -19,7 +19,8 @@ export const CaseClient = ({ clientId, clientName, changeHandler, clientHandler,
                         />
                         {clientName !== "" && debounced && <PotentialClients partialName={clientName} clientHandler={clientHandler} />}
                     </>
-                ) : <ClientName clientId={clientId} />}
+                )}
+                {clientId > 0 && <ClientName clientId={clientId} />}
             </div>
         </div>
     )

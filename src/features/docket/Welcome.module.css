@@ -14,6 +14,10 @@
 
 }
 
+.welcome li::before {
+    /* content: "✅"; */
+}
+
 .incomplete {
 
 }

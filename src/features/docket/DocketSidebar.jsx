@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-export const DocketSidebar = ({ view, views, setView }) => {
+export const DocketSidebar = ({ view, views, setView, hasEvents, openDialog }) => {
 
     const [eventTypes, setEventTypes] = useState({
         'court appearances': true,
@@ -36,45 +36,49 @@ export const DocketSidebar = ({ view, views, setView }) => {
     return (
         <ul>
             <li>
-                <button>Schedule New Event</button>
+                <button onClick={openDialog}>Schedule New Event</button>
             </li>
-            <li>
-                <div>View:</div>
-                <div>{views.map(v => (
-                    <div key={v}>
-                        <input type="radio"
-                            id={v}
-                            onKeyDown={keydownHandler}
-                            onChange={viewChangeHandler}
-                            value={v}
-                            checked={view === v}
-                        /><label htmlFor={v}>{v}</label>
-                    </div>
-                )
-                )}</div>
-            </li>
-            <li>
-                <div>Event Types:</div>
-                <ul>
-                    {Object.keys(eventTypes).map(type => {
-                        return (
-                            <li key={type}>
-                                <input type='checkbox'
-                                    id={type}
-                                    name={type}
-                                    onChange={eventsChangeHandler}
-                                    checked={eventTypes[type]}
-                                />
-                                <label htmlFor={type}>{type}</label>
-                            </li>
+            {hasEvents && (
+                <>
+                    <li>
+                        <div>View:</div>
+                        <div>{views.map(v => (
+                            <div key={v}>
+                                <input type="radio"
+                                    id={v}
+                                    onKeyDown={keydownHandler}
+                                    onChange={viewChangeHandler}
+                                    value={v}
+                                    checked={view === v}
+                                /><label htmlFor={v}>{v}</label>
+                            </div>
                         )
-                    })}
-                </ul>
-            </li>
-            <li>
-                <div>Filter by client name:</div>
-                <input type="text" />
-            </li>
+                        )}</div>
+                    </li>
+                    <li>
+                        <div>Event Types:</div>
+                        <ul>
+                            {Object.keys(eventTypes).map(type => {
+                                return (
+                                    <li key={type}>
+                                        <input type='checkbox'
+                                            id={type}
+                                            name={type}
+                                            onChange={eventsChangeHandler}
+                                            checked={eventTypes[type]}
+                                        />
+                                        <label htmlFor={type}>{type}</label>
+                                    </li>
+                                )
+                            })}
+                        </ul>
+                    </li>
+                    <li>
+                        <div>Filter by client name:</div>
+                        <input type="text" />
+                    </li>
+                </>
+            )}
         </ul>
     )
 }

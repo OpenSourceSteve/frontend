@@ -3,8 +3,10 @@ import { useNavigate, useSearchParams } from 'react-router-dom'
 
 // import API calls
 import { useGetEventsQuery } from '../events/eventsSlice'
+import { useGetClientsQuery } from '../clients/clientsSlice'
+import { useGetCasesQuery } from '../cases/casesSlice'
 
-import { CreateEventInputModal } from '../events/CreateEventInputModal'
+import { SelectClientCreateEventInputModal } from '../events/SelectClientCreateEventInputModal'
 
 // import UI and static data
 import { DocketSidebar } from './DocketSidebar'
@@ -22,7 +24,7 @@ export const Docket = () => {
         'monthly'
     ]
 
-    const createEventDialogRef = useRef(1)
+    const selectClientCreateEventDialogRef = useRef(1)
 
     const [searchParams] = useSearchParams()
     const date = searchParams.get("date")
@@ -53,15 +55,31 @@ export const Docket = () => {
         error: nextError
     } = useGetEventsQuery({ next: true })
 
+    const {
+        data: hasClients,
+        isLoading: isClientsLoading,
+        isSuccess: isClientsSuccess,
+        isError: isClientsError,
+        error: clientsError
+    } = useGetClientsQuery()
+
+    const {
+        data: hasCases,
+        isLoading: isCasesLoading,
+        isSuccess: isCasesSuccess,
+        isError: isCasesError,
+        error: casesError
+    } = useGetCasesQuery()
+
     const openDialog = () => {
-        if (!createEventDialogRef.current.open) {
-            createEventDialogRef.current.showModal()
+        if (!selectClientCreateEventDialogRef.current.open) {
+            selectClientCreateEventDialogRef.current.showModal()
         }
     }
 
     const closeDialog = mode => {
-        if (createEventDialogRef.current.open) {
-            createEventDialogRef.current.close()
+        if (selectClientCreateEventDialogRef.current.open) {
+            selectClientCreateEventDialogRef.current.close()
         }
     }
 
@@ -86,7 +104,7 @@ export const Docket = () => {
                     </>
                 )
             } else {
-                content = <Welcome />
+                content = <Welcome hasClients={hasClients || false} hasCases={hasCases || false} />
             }
 
         }
@@ -112,16 +130,16 @@ export const Docket = () => {
             <Header currentPage="docket" pages={pages} />
             <Main>
                 <Sidebar>
-                    {events?.length > 0 && (
-                        <DocketSidebar view={view}
-                            views={views}
-                            setView={setView}
-                        />
-                    )}
+                    <DocketSidebar view={view}
+                        views={views}
+                        setView={setView}
+                        hasEvents={events?.length > 0}
+                        openDialog={openDialog}
+                    />
                 </Sidebar>
                 <Section>
                     {content}
-                    <CreateEventInputModal ref={createEventDialogRef}
+                    <SelectClientCreateEventInputModal ref={selectClientCreateEventDialogRef}
                         closeHandler={closeDialog}
                         eventTypeOptions={eventTypeOptions}
                     />
