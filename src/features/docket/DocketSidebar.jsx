@@ -55,7 +55,7 @@ export const DocketSidebar = ({ view, views, setView, hasEvents, openDialog }) =
                         )
                         )}</div>
                     </li>
-                    <li>
+                    {/* <li>
                         <div>Event Types:</div>
                         <ul>
                             {Object.keys(eventTypes).map(type => {
@@ -76,7 +76,7 @@ export const DocketSidebar = ({ view, views, setView, hasEvents, openDialog }) =
                     <li>
                         <div>Filter by client name:</div>
                         <input type="text" />
-                    </li>
+                    </li> */}
                 </>
             )}
         </ul>
